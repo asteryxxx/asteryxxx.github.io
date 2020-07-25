@@ -350,6 +350,361 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/15/mysql1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="彭摆鱼">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Asteryxx">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/15/mysql1/" class="post-title-link" itemprop="url">数据库题（1）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-15 15:08:28" itemprop="dateCreated datePublished" datetime="2019-04-15T15:08:28+08:00">2019-04-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-16 01:12:32" itemprop="dateModified" datetime="2019-06-16T01:12:32+08:00">2019-06-16</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><strong>1.求前三名的名字和分数以及其他人分数的总和</strong><br>结果：<br><img src="/images/mysql1.png" alt="image2"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select * from (select s.name,s.score FROM score s ORDER BY</span><br><span class="line">score desc limit 3)b</span><br><span class="line">UNION all</span><br><span class="line">select &apos;其他&apos;,sum(score) from score ss where ss.name not in (</span><br><span class="line">select  b.name from(</span><br><span class="line">SELECT `NAME` FROM score s ORDER BY score DESC LIMIT 3 )b)</span><br></pre></td></tr></table></figure>
+<p>解释下：UNION 操作符用于合并两个或多个 SELECT 语句的结果集。请注意，UNION 内部的 SELECT 语句必须拥有相同数量的列。列也必须拥有相似的数据类型。同时，每条 SELECT 语句中的列的顺序必须相同。 union和union all 的区别。union会过滤掉两个结果集中重复的行，而union all不会过滤掉重复行<br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/15/mysql1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/15/mysql2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="彭摆鱼">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Asteryxx">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/15/mysql2/" class="post-title-link" itemprop="url">数据库题（2）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-15 15:08:28" itemprop="dateCreated datePublished" datetime="2019-04-15T15:08:28+08:00">2019-04-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-12 21:42:23" itemprop="dateModified" datetime="2019-06-12T21:42:23+08:00">2019-06-12</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>1.学生表student 字段（id,name），学生科目成绩表stu_score字段（stu_id,subject,score）查询出所有科目分数都大于80分的所有学生的姓名与分数</strong><br>有两种方法:1、<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">select name from stu</span><br><span class="line">group by name</span><br><span class="line">having name not in (</span><br><span class="line">select name from stu</span><br><span class="line">where score &lt;80)        </span><br><span class="line">按照名字分组，然后找出分数小于80的人，过滤名字不在该里面的</span><br></pre></td></tr></table></figure></p>
+<p>2、<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select name from test.stu</span><br><span class="line">group by name</span><br><span class="line">having min(score)&gt;=80 按照名字分组，过滤having最小的分数&gt;=80的人</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/15/mysql3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -651,364 +1006,6 @@
           
             <div class="post-button text-center">
               <a class="btn" href="/2019/04/15/px/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/15/sjkyh/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="彭摆鱼">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Asteryxx">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/15/sjkyh/" class="post-title-link" itemprop="url">数据库优化</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-15 15:08:28" itemprop="dateCreated datePublished" datetime="2019-04-15T15:08:28+08:00">2019-04-15</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-16 14:50:59" itemprop="dateModified" datetime="2019-06-16T14:50:59+08:00">2019-06-16</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/面试/" itemprop="url" rel="index"><span itemprop="name">面试</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><strong><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;定位：查找，定位慢查询，并优化</small></strong><br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/15/sjkyh/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/15/sjms/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="彭摆鱼">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Asteryxx">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/15/sjms/" class="post-title-link" itemprop="url">设计模式</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-15 15:08:28" itemprop="dateCreated datePublished" datetime="2019-04-15T15:08:28+08:00">2019-04-15</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-17 01:28:29" itemprop="dateModified" datetime="2019-06-17T01:28:29+08:00">2019-06-17</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/面试/" itemprop="url" rel="index"><span itemprop="name">面试</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><strong>1.工厂模式</strong><br><strong><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在父类中定义创建对象的一个接口，让子类决定实例化哪个类</small></strong><br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/15/sjms/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1445,184 +1442,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/10/asynbiji/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="彭摆鱼">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Asteryxx">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/10/asynbiji/" class="post-title-link" itemprop="url">async基础用法</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-10 15:08:28" itemprop="dateCreated datePublished" datetime="2019-04-10T15:08:28+08:00">2019-04-10</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-07-25 22:46:05" itemprop="dateModified" datetime="2020-07-25T22:46:05+08:00">2020-07-25</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="async就是异步的意思，-异步函数也就意味着该函数的执行不会阻塞后面代码的执行"><a href="#async就是异步的意思，-异步函数也就意味着该函数的执行不会阻塞后面代码的执行" class="headerlink" title="async就是异步的意思， 异步函数也就意味着该函数的执行不会阻塞后面代码的执行"></a>async就是异步的意思， 异步函数也就意味着该函数的执行不会阻塞后面代码的执行</h2><hr>
-<p><strong>先来一段代码</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">async function timeout()&#123;</span><br><span class="line">     return &quot;hello world&quot;</span><br><span class="line">   &#125;</span><br><span class="line">   timeout();</span><br><span class="line">  console.log(&apos;我在后面，但是我先执行的&apos;)</span><br></pre></td></tr></table></figure></p>
-<p><small>输出结果只输出了一句。async 函数 timeout  调用了，但是没有任何输出，它不是应该返回 ‘hello world!于是我们打印一下发现<strong>async 函数返回的是一个promise 对象，如果要获取到promise 返回值，我们应该用then 方法</strong></small><br><img src="/images/asyn1.jpg" alt="image1"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">async function timeout() &#123;</span><br><span class="line">    return &apos;hello world&apos;</span><br><span class="line">&#125;</span><br><span class="line">timeout().then(result =&gt; &#123;</span><br><span class="line">    console.log(result);</span><br><span class="line">&#125;)</span><br><span class="line">console.log(&apos;虽然在后面，但是我先执行&apos;);</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/asyn2.jpg" alt="image2"><br>await是等待的意思，注意<strong>await 关键字只能放到async 函数里面</strong><br>await 后面放置的就是<strong>返回promise对象的一个表达式</strong>，所以它后面可以写上 doubleAfter2seconds 函数的调用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 2s 之后返回双倍的值</span><br><span class="line">   function doubleAfter2seconds(num) &#123;</span><br><span class="line">       return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">           setTimeout(() =&gt; &#123;</span><br><span class="line">               resolve(2 * num)</span><br><span class="line">           &#125;, 2000);</span><br><span class="line">       &#125; )</span><br><span class="line">   &#125;</span><br><span class="line">   async function testResult() &#123;</span><br><span class="line">       let result = await doubleAfter2seconds(30);</span><br><span class="line">       console.log(result);</span><br><span class="line">   &#125;</span><br><span class="line">   testResult(); //2s后输出60</span><br></pre></td></tr></table></figure>
-<p>看看代码的执行过程，调用testResult 函数，它里面遇到了await, await 表示等一下，代码就暂停到这里，不再向下执行了，它等什么呢？等后面的promise对象执行完毕，然后拿到promise resolve 的值并进行返回，返回值拿到之后，它继续向下执行。具体到 我们的代码, 遇到await 之后，代码就暂停执行了， 等待doubleAfter2seconds(30) 执行完毕，doubleAfter2seconds(30) 返回的promise 开始执行，2秒 之后，promise resolve 了， 并返回了值为60， 这时await 才拿到返回值60， 然后赋值给result， 暂停结束，代码才开始继续执行，执行 console.log语句。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/10/duoxiancheng/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1768,6 +1587,193 @@
         
       
     </li></ul></blockquote></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/10/javajc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="彭摆鱼">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Asteryxx">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/10/javajc/" class="post-title-link" itemprop="url">高频面试题总结</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-10 15:08:28" itemprop="dateCreated datePublished" datetime="2019-04-10T15:08:28+08:00">2019-04-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-16 01:51:34" itemprop="dateModified" datetime="2019-06-16T01:51:34+08:00">2019-06-16</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/后端/" itemprop="url" rel="index"><span itemprop="name">后端</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <hr>
+<p><strong>1.Java中的异常有哪几类？分别怎么使用？</strong><br><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;非运行需要try…catch才能编译通过。运行时异常不用try…catch也能编译通过。RuntimeException是运行时异常，不需要try…catch也能编译通过。IoException，SQLException等等其他所有异常都是检出异常，必须要try…catach才能编译通过。</small></p>
+<p><strong>2.请简述http协议中get请求和post请求的区别？</strong><br>   <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;()get请求参数会添加到url链接的后缀，如果是多个以&amp;符合连接，get请求可以被缓存，post不可以缓存，对数据长度是没有限制的Post请求的参数是存储在方法体里的；get传的参数会暴露在外面，不安全。GET产生一个TCP数据包；POST产生两个TCP数据包</small></p>
+<blockquote>
+<ul>
+<li><small>对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；一趟</small></li>
+<li><small>对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）。二趟哦</small></li>
+</ul>
+</blockquote>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/10/javajc/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
 
     
 
@@ -1999,7 +2005,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/10/javajc/">
+    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/10/asynbiji/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="彭摆鱼">
@@ -2019,7 +2025,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/04/10/javajc/" class="post-title-link" itemprop="url">高频面试题总结</a>
+                <a href="/2019/04/10/asynbiji/" class="post-title-link" itemprop="url">async基础用法</a>
               
             
           </h1>
@@ -2061,7 +2067,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-16 01:51:34" itemprop="dateModified" datetime="2019-06-16T01:51:34+08:00">2019-06-16</time>
+                <time title="修改时间：2020-07-25 22:46:05" itemprop="dateModified" datetime="2020-07-25T22:46:05+08:00">2020-07-25</time>
               
             
           </span>
@@ -2078,7 +2084,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/后端/" itemprop="url" rel="index"><span itemprop="name">后端</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
 
                 
                 
@@ -2114,24 +2120,15 @@
 
       
         
-          <hr>
-<p><strong>1.Java中的异常有哪几类？分别怎么使用？</strong><br><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;非运行需要try…catch才能编译通过。运行时异常不用try…catch也能编译通过。RuntimeException是运行时异常，不需要try…catch也能编译通过。IoException，SQLException等等其他所有异常都是检出异常，必须要try…catach才能编译通过。</small></p>
-<p><strong>2.请简述http协议中get请求和post请求的区别？</strong><br>   <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;()get请求参数会添加到url链接的后缀，如果是多个以&amp;符合连接，get请求可以被缓存，post不可以缓存，对数据长度是没有限制的Post请求的参数是存储在方法体里的；get传的参数会暴露在外面，不安全。GET产生一个TCP数据包；POST产生两个TCP数据包</small></p>
-<blockquote>
-<ul>
-<li><small>对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；一趟</small></li>
-<li><small>对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）。二趟哦</small></li>
-</ul>
-</blockquote>
-          <!--noindex-->
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/10/javajc/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
+            <h2 id="async就是异步的意思，-异步函数也就意味着该函数的执行不会阻塞后面代码的执行"><a href="#async就是异步的意思，-异步函数也就意味着该函数的执行不会阻塞后面代码的执行" class="headerlink" title="async就是异步的意思， 异步函数也就意味着该函数的执行不会阻塞后面代码的执行"></a>async就是异步的意思， 异步函数也就意味着该函数的执行不会阻塞后面代码的执行</h2><hr>
+<p><strong>先来一段代码</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">async function timeout()&#123;</span><br><span class="line">     return &quot;hello world&quot;</span><br><span class="line">   &#125;</span><br><span class="line">   timeout();</span><br><span class="line">  console.log(&apos;我在后面，但是我先执行的&apos;)</span><br></pre></td></tr></table></figure></p>
+<p><small>输出结果只输出了一句。async 函数 timeout  调用了，但是没有任何输出，它不是应该返回 ‘hello world!于是我们打印一下发现<strong>async 函数返回的是一个promise 对象，如果要获取到promise 返回值，我们应该用then 方法</strong></small><br><img src="/images/asyn1.jpg" alt="image1"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">async function timeout() &#123;</span><br><span class="line">    return &apos;hello world&apos;</span><br><span class="line">&#125;</span><br><span class="line">timeout().then(result =&gt; &#123;</span><br><span class="line">    console.log(result);</span><br><span class="line">&#125;)</span><br><span class="line">console.log(&apos;虽然在后面，但是我先执行&apos;);</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/asyn2.jpg" alt="image2"><br>await是等待的意思，注意<strong>await 关键字只能放到async 函数里面</strong><br>await 后面放置的就是<strong>返回promise对象的一个表达式</strong>，所以它后面可以写上 doubleAfter2seconds 函数的调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 2s 之后返回双倍的值</span><br><span class="line">   function doubleAfter2seconds(num) &#123;</span><br><span class="line">       return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">           setTimeout(() =&gt; &#123;</span><br><span class="line">               resolve(2 * num)</span><br><span class="line">           &#125;, 2000);</span><br><span class="line">       &#125; )</span><br><span class="line">   &#125;</span><br><span class="line">   async function testResult() &#123;</span><br><span class="line">       let result = await doubleAfter2seconds(30);</span><br><span class="line">       console.log(result);</span><br><span class="line">   &#125;</span><br><span class="line">   testResult(); //2s后输出60</span><br></pre></td></tr></table></figure>
+<p>看看代码的执行过程，调用testResult 函数，它里面遇到了await, await 表示等一下，代码就暂停到这里，不再向下执行了，它等什么呢？等后面的promise对象执行完毕，然后拿到promise resolve 的值并进行返回，返回值拿到之后，它继续向下执行。具体到 我们的代码, 遇到await 之后，代码就暂停执行了， 等待doubleAfter2seconds(30) 执行完毕，doubleAfter2seconds(30) 返回的promise 开始执行，2秒 之后，promise resolve 了， 并返回了值为60， 这时await 才拿到返回值60， 然后赋值给result， 暂停结束，代码才开始继续执行，执行 console.log语句。</p>
+
           
-          <!--/noindex-->
         
       
     </div>
