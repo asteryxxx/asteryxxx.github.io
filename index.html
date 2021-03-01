@@ -350,6 +350,258 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2020/11/16/js数据类型的判断/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="彭摆鱼">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Asteryxx">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2020/11/16/js数据类型的判断/" class="post-title-link" itemprop="url">js数据类型的判断</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-11-16 15:08:28" itemprop="dateCreated datePublished" datetime="2020-11-16T15:08:28+08:00">2020-11-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2021-03-01 22:40:05" itemprop="dateModified" datetime="2021-03-01T22:40:05+08:00">2021-03-01</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>如何判断数据类型?</p>
+<h1 id="1、typeof"><a href="#1、typeof" class="headerlink" title="1、typeof"></a>1、typeof</h1><blockquote>
+<p><strong><code>typeof</code></strong> 操作符返回一个字符串，表示未经计算的操作数的类型。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Undefined</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>Null</td>
+<td>object</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>Number</td>
+<td>number</td>
+</tr>
+<tr>
+<td>BigInt(es2020新增)</td>
+<td>bigint</td>
+</tr>
+<tr>
+<td>String</td>
+<td>string</td>
+</tr>
+<tr>
+<td>Symbol</td>
+<td>symbol</td>
+</tr>
+<tr>
+<td>宿主对象</td>
+<td>取决于具体实现</td>
+</tr>
+<tr>
+<td>Function对象</td>
+<td>function</td>
+</tr>
+<tr>
+<td>其他任何对象</td>
+<td>object</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> []) <span class="comment">// object     []数组的数据类型在 typeof 中被解释为 object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;) <span class="comment">// function</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> &#123;&#125;) <span class="comment">// object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">undefined</span>) <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">null</span>)<span class="comment">// object     null 的数据类型被 typeof 解释为 object</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="string">'1'</span> === <span class="string">'string'</span>) <span class="comment">// true  注意内容为数字的字符串仍是字符串;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 【 使用 Array.isArray 或者 Object.prototype.toString.call】</span></span><br><span class="line"><span class="comment">//  区分数组和普通对象</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call([<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>]));<span class="comment">//[object Array]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(&#123;<span class="attr">a</span>: <span class="number">1</span>&#125;)) <span class="comment">//[object Object]</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Array</span>.isArray([<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>]));<span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Array</span>.isArray(&#123;&#125;)) <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 需要注意几个例子：用new出来的都是object类型</span></span><br><span class="line"><span class="comment">// 除 Function 外的所有构造函数的类型都是 'object'</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">1</span>) === <span class="string">'object'</span>);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">String</span>(<span class="string">'abc'</span>) === <span class="string">'object'</span>);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Function</span>());<span class="comment">// function</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-1-typeof-null"><a href="#1-1-typeof-null" class="headerlink" title="1.1 typeof null"></a>1.1 typeof null</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JavaScript 诞生以来便如此</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="literal">null</span> === <span class="string">'object'</span>);<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>在 JavaScript 最初的实现中，JavaScript 中的值是由一个表示类型的标签和实际数据值表示的。对象的类型标签是 0。由于 <code>null</code> 代表的是空指针（大多数平台下值为 0x00），因此，null 的类型标签是 0，<code>typeof null</code> 也因此返回 <code>&quot;object&quot;</code></p>
+<h3 id="1-2-语法中的括号"><a href="#1-2-语法中的括号" class="headerlink" title="1.2 语法中的括号"></a>1.2 语法中的括号</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 括号有无将决定表达式的类型。</span></span><br><span class="line"><span class="built_in">console</span>.log( <span class="keyword">typeof</span> <span class="number">99</span> + <span class="string">'pyy'</span>);<span class="comment">// 'numberpyy'</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> (<span class="number">99</span> + <span class="string">'pyy'</span>))<span class="comment">// 'string'</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-3-typeof错误"><a href="#1-3-typeof错误" class="headerlink" title="1.3 typeof错误"></a>1.3 typeof错误</h3><p>在 ECMAScript 2015 之前，<strong><code>typeof</code> 总能保证对任何所给的操作数返回一个字符串。</strong>即便是没有声明的标识符，<code>typeof</code> 也能返回 <code>&#39;undefined&#39;</code><strong>。使用 <code>typeof</code> 永远不会抛出错误</strong></p>
+<p>但在加入了块级作用域的 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/let" target="_blank" rel="noopener">let</a> 和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/const" target="_blank" rel="noopener">const</a> 之后，在其被声明之前对块中的 <code>let</code> 和 <code>const</code> 变量使用 <code>typeof</code> 会抛出一个 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError" target="_blank" rel="noopener">ReferenceError</a>。<strong>块作用域变量在块的头部处于“[暂存死区]”，直至其被初始化，在这期间，访问变量将会引发错误</strong></p>
+<h4 id="1-3-1-暂存死区"><a href="#1-3-1-暂存死区" class="headerlink" title="1.3.1 暂存死区"></a>1.3.1 暂存死区</h4><p>与通过  <code>var</code> 声明的有初始化值 <code>undefined</code> 的变量不同，通过 <code>let</code> 声明的变量直到它们的定义被执行时才初始化<strong>。在变量初始化前访问该变量会导致 <code>ReferenceError</code>。该变量处在一个自块顶部到初始化处理的“暂存死区”中</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">do_something</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(bar) <span class="comment">// undefined</span></span><br><span class="line">  <span class="built_in">console</span>.log(foo) </span><br><span class="line">  <span class="comment">//ReferenceError: Cannot access 'foo' before initialization</span></span><br><span class="line">  <span class="keyword">var</span> bar = <span class="number">1</span></span><br><span class="line">  <span class="keyword">let</span> foo = <span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">do_something</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> foo;</span><br><span class="line">  <span class="comment">//通过 let 声明的变量直到它们的定义被执行时才初始化</span></span><br><span class="line">  <span class="built_in">console</span>.log(foo)<span class="comment">//undefined</span></span><br><span class="line">  foo = <span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="1-3-2-暂存死区与typeof"><a href="#1-3-2-暂存死区与typeof" class="headerlink" title="1.3.2 暂存死区与typeof"></a>1.3.2 暂存死区与typeof</h4><p>与通过<code>var</code>声明的变量, 有初始化值 <code>undefined</code>和只是未声明的变量不同的是，如果使用<code>typeof</code>检测在暂存死区中的变量, 会抛出<code>ReferenceError</code>异常:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//'undefined'</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> undeclaredVariable)</span><br><span class="line"></span><br><span class="line"><span class="comment">//ReferenceError: Cannot access 'i' before initialization</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> i)</span><br><span class="line"><span class="keyword">let</span> i = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<h1 id="2、instanceof"><a href="#2、instanceof" class="headerlink" title="2、instanceof"></a>2、instanceof</h1><p><strong>运算符</strong>用于检测（构造函数的 <code>prototype</code> 属性）【constructor.prototype】是否出现在某个实例对象的原型链上</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Car</span> (<span class="params">make, model, year</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.make = make</span><br><span class="line">  <span class="keyword">this</span>.model = model</span><br><span class="line">  <span class="keyword">this</span>.year = year</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> auto = <span class="keyword">new</span> Car(<span class="string">'Honda'</span>, <span class="string">'Accord'</span>, <span class="number">1998</span>)</span><br><span class="line"><span class="built_in">console</span>.log(auto <span class="keyword">instanceof</span> Car)</span><br><span class="line"><span class="comment">//  true</span></span><br><span class="line"><span class="built_in">console</span>.log(auto <span class="keyword">instanceof</span> <span class="built_in">Object</span>)</span><br><span class="line"><span class="comment">//  true</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'abc'</span> <span class="keyword">instanceof</span> <span class="built_in">String</span>) <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125; <span class="keyword">instanceof</span> <span class="built_in">Function</span>) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log([] <span class="keyword">instanceof</span> <span class="built_in">Array</span>) <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(&#123;&#125; <span class="keyword">instanceof</span> <span class="built_in">Object</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>从结果可以看的出只有引用数据类型（Array，Function，Object）可以被判断到，其他的String和Number不能被instanceof判断到</p>
+<p><strong>注意：没有用instanceof来判断null和undefined，因为null，undefined不是构造器</strong></p>
+<h1 id="3、Object-prototype-toString-call"><a href="#3、Object-prototype-toString-call" class="headerlink" title="3、Object.prototype.toString.call()"></a><strong>3、Object.prototype.toString.call()</strong></h1><blockquote>
+<p>toString() 方法返回一个表示该对象的字符串。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Dog</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//在toString没有被重写的情况下打印：[object Object]</span></span><br><span class="line"><span class="keyword">const</span> dog1 = <span class="keyword">new</span> Dog(<span class="string">'Gabby'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(dog1.toString())</span><br><span class="line"><span class="comment">//如果重写了</span></span><br><span class="line">Dog.prototype.toString = <span class="function"><span class="keyword">function</span> <span class="title">dogToString</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(dog1.toString())</span><br><span class="line"><span class="comment">//Gabby</span></span><br></pre></td></tr></table></figure>
+<p>每个对象都有一个 <code>toString()</code> 方法，当该对象被表示为一个文本值时，或者一个对象以预期的字符串方式引用时自动调用。默认情况下，<strong><code>toString()</code> 方法被每个 <code>Object</code> 对象继承。如果此方法在自定义对象中未被覆盖，<code>toString()</code> 返回 “[object <em>type</em>]”，其中 <code>type</code> 是对象的类型</strong></p>
+<h3 id="3-1-使用toString-检测对象类型"><a href="#3-1-使用toString-检测对象类型" class="headerlink" title="3.1 使用toString()检测对象类型"></a>3.1 使用toString()检测对象类型</h3><p>可以通过 <code>toString()</code> 来获取每个对象的类型。为了每个对象都能通过 <code>Object.prototype.toString()</code> 来检测，需要以 <code>Function.prototype.call()</code> 或者 <code>Function.prototype.apply()</code> 的形式来调用，传递要检查的对象作为第一个参数，</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> toString = <span class="built_in">Object</span>.prototype.toString</span><br><span class="line">toString.call(<span class="number">123</span>) <span class="comment">// [object Number]</span></span><br><span class="line">toString.call(<span class="string">'abc'</span>) <span class="comment">// [object String]</span></span><br><span class="line">toString.call([]) <span class="comment">// [object Array]</span></span><br><span class="line">toString.call(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;) <span class="comment">// [object Function]</span></span><br><span class="line">toString.call(&#123;&#125;) <span class="comment">// [object Object]</span></span><br><span class="line">toString.call(<span class="literal">undefined</span>) <span class="comment">// [object Undefined]</span></span><br><span class="line">toString.call(<span class="literal">null</span>) <span class="comment">// [object Null]</span></span><br><span class="line"><span class="comment">//内置对象类型也能判断</span></span><br><span class="line">toString.call(<span class="keyword">new</span> <span class="built_in">String</span>()) <span class="comment">// [object String]</span></span><br><span class="line">toString.call(<span class="keyword">new</span> <span class="built_in">Date</span>()) <span class="comment">// [object Date]</span></span><br></pre></td></tr></table></figure>
+<p>参考资料：</p>
+<p><a href="https://mp.weixin.qq.com/s/qDT4zBxUT-nYCMyrzc-Yaw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/qDT4zBxUT-nYCMyrzc-Yaw</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/instanceof" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/instanceof</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2020/11/15/js预解析和执行过程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1233,7 +1485,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/21/dxc2/">
+    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/21/dxc3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="彭摆鱼">
@@ -1253,7 +1505,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/04/21/dxc2/" class="post-title-link" itemprop="url">CountDownLatch</a>
+                <a href="/2019/04/21/dxc3/" class="post-title-link" itemprop="url">Semaphore</a>
               
             
           </h1>
@@ -1278,7 +1530,7 @@
                 
               
 
-              <time title="创建时间：2019-04-21 00:43:01 / 修改时间：02:00:50" itemprop="dateCreated datePublished" datetime="2019-04-21T00:43:01+08:00">2019-04-21</time>
+              <time title="创建时间：2019-04-21 00:43:01 / 修改时间：02:00:56" itemprop="dateCreated datePublished" datetime="2019-04-21T00:43:01+08:00">2019-04-21</time>
             
 
             
@@ -1336,11 +1588,11 @@
 
       
         
-          <p>CountDownLatch<br><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CountDownLatch是通过一个计数器来实现的，计数器的初始化值为线程的数量。每当一个线程完成了自己的任务后，计数器的值就相应得减1。当计数器到达0时，表示所有的线程都已完成任务，然后在闭锁上等待的线程就可以恢复执行任务。”【1】举一个例子就是：CountDownLatch 就像裁判，三个方法运动员，运动员2,3都到达终点，但是运动员1摔了。裁判员只看到两位运动员到达终点不能宣布比赛结束，所以一直在等待阻塞。。。 </small><br>
+          <p>Semaphore<br><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Semaphore（信号量）是用来控制同时访问特定资源的线程数量，如果将给定许可数设置为1，就如同一个单例模式，即单个停车位，只有一辆车进，然后这辆车出来后，下一辆车才能进。就如同停车场系统一般，而Semaphore则相当于看守的人，用于控制总共允许停车的停车位的个数，而对于每辆车来说就如同一个线程，线程需要通过acquire()方法获取许可，而release()释放许可。如果许可数达到最大活动数，那么调用acquire()之后，便进入等待队列，等待已获得许可的线程释放许可，从而使得多线程能够合理的运行 </small><br>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2019/04/21/dxc2/#more" rel="contents">
+              <a class="btn" href="/2019/04/21/dxc3/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1567,7 +1819,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/21/dxc3/">
+    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/21/dxc2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="彭摆鱼">
@@ -1587,7 +1839,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/04/21/dxc3/" class="post-title-link" itemprop="url">Semaphore</a>
+                <a href="/2019/04/21/dxc2/" class="post-title-link" itemprop="url">CountDownLatch</a>
               
             
           </h1>
@@ -1612,7 +1864,7 @@
                 
               
 
-              <time title="创建时间：2019-04-21 00:43:01 / 修改时间：02:00:56" itemprop="dateCreated datePublished" datetime="2019-04-21T00:43:01+08:00">2019-04-21</time>
+              <time title="创建时间：2019-04-21 00:43:01 / 修改时间：02:00:50" itemprop="dateCreated datePublished" datetime="2019-04-21T00:43:01+08:00">2019-04-21</time>
             
 
             
@@ -1670,178 +1922,11 @@
 
       
         
-          <p>Semaphore<br><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Semaphore（信号量）是用来控制同时访问特定资源的线程数量，如果将给定许可数设置为1，就如同一个单例模式，即单个停车位，只有一辆车进，然后这辆车出来后，下一辆车才能进。就如同停车场系统一般，而Semaphore则相当于看守的人，用于控制总共允许停车的停车位的个数，而对于每辆车来说就如同一个线程，线程需要通过acquire()方法获取许可，而release()释放许可。如果许可数达到最大活动数，那么调用acquire()之后，便进入等待队列，等待已获得许可的线程释放许可，从而使得多线程能够合理的运行 </small><br>
+          <p>CountDownLatch<br><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CountDownLatch是通过一个计数器来实现的，计数器的初始化值为线程的数量。每当一个线程完成了自己的任务后，计数器的值就相应得减1。当计数器到达0时，表示所有的线程都已完成任务，然后在闭锁上等待的线程就可以恢复执行任务。”【1】举一个例子就是：CountDownLatch 就像裁判，三个方法运动员，运动员2,3都到达终点，但是运动员1摔了。裁判员只看到两位运动员到达终点不能宣布比赛结束，所以一直在等待阻塞。。。 </small><br>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2019/04/21/dxc3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/21/dxc5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="彭摆鱼">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Asteryxx">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/21/dxc5/" class="post-title-link" itemprop="url">多线程笔试2</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-21 00:43:01 / 修改时间：02:01:12" itemprop="dateCreated datePublished" datetime="2019-04-21T00:43:01+08:00">2019-04-21</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔试/" itemprop="url" rel="index"><span itemprop="name">笔试</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编写一个程序，开启 3 个线程，这三个线程的 ID 分别为 A、B、C，每个线程将自己的 ID 在屏幕上打印 10 遍，要求输出的结果必须按顺序显示。如：ABCABCABC </small><br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/21/dxc5/#more" rel="contents">
+              <a class="btn" href="/2019/04/21/dxc2/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2068,7 +2153,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/16/dxc7/">
+    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/21/dxc5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="彭摆鱼">
@@ -2088,7 +2173,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/04/16/dxc7/" class="post-title-link" itemprop="url">CyclicBarrier</a>
+                <a href="/2019/04/21/dxc5/" class="post-title-link" itemprop="url">多线程笔试2</a>
               
             
           </h1>
@@ -2113,24 +2198,12 @@
                 
               
 
-              <time title="创建时间：2019-04-16 00:43:01" itemprop="dateCreated datePublished" datetime="2019-04-16T00:43:01+08:00">2019-04-16</time>
+              <time title="创建时间：2019-04-21 00:43:01 / 修改时间：02:01:12" itemprop="dateCreated datePublished" datetime="2019-04-21T00:43:01+08:00">2019-04-21</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-21 02:01:32" itemprop="dateModified" datetime="2019-04-21T02:01:32+08:00">2019-04-21</time>
               
             
           </span>
@@ -2147,7 +2220,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/后端/" itemprop="url" rel="index"><span itemprop="name">后端</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔试/" itemprop="url" rel="index"><span itemprop="name">笔试</span></a></span>
 
                 
                 
@@ -2183,11 +2256,11 @@
 
       
         
-          <p><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//CyclicBarrier可以用于多线程计算数据，最后合并计算结果的场景。例如，用一个Excel保存了用户所有银行流水，每个Sheet保存一个账户近一年的每笔银行流水，现在需要统计用户的日均银行流水，先用多线程处理每个sheet里的银行流水，都执行完之后，得到每个sheet的日均银行流水，最后，再用barrierAction用这些线程的计算结果，计算出整个Excel的日均银行流水 </small><br>
+          <p><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编写一个程序，开启 3 个线程，这三个线程的 ID 分别为 A、B、C，每个线程将自己的 ID 在屏幕上打印 10 遍，要求输出的结果必须按顺序显示。如：ABCABCABC </small><br>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2019/04/16/dxc7/#more" rel="contents">
+              <a class="btn" href="/2019/04/21/dxc5/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2280,7 +2353,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
