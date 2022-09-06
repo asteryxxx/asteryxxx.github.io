@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="什么是有状态的登陆？&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;解释：服务端需要记录每次会话的客户端信息，从而识别客户端身份，根据用户身份进行请求的处理，例如tomcat的session。 用户登陆后，我们把登陆者的信息保存在服务端session中，并赋给用户一个cookie值，记录对应的session。然后下次请求，用户携带cookie请求，我们就能识别到对应的session，从">
+<meta name="keywords" content="java,内容管理系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用户认证与授权">
+<meta property="og:url" content="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/05/01/xuecheng3/index.html">
+<meta property="og:site_name" content="Asteryxx">
+<meta property="og:description" content="什么是有状态的登陆？&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;解释：服务端需要记录每次会话的客户端信息，从而识别客户端身份，根据用户身份进行请求的处理，例如tomcat的session。 用户登陆后，我们把登陆者的信息保存在服务端session中，并赋给用户一个cookie值，记录对应的session。然后下次请求，用户携带cookie请求，我们就能识别到对应的session，从">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://weibo.com/images/rz1.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz12.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz13.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz14.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz15.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz2.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz4.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz3.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz5.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz6.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz7.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz8.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz9.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz10.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz11.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz11.png">
+<meta property="og:image" content="https://weibo.com/images/rz12.png">
+<meta property="og:image" content="https://weibo.com/images/rz13.png">
+<meta property="og:image" content="https://weibo.com/images/rz14.png">
+<meta property="og:image" content="https://weibo.com/images/rz15.png">
+<meta property="og:image" content="https://weibo.com/images/rz16.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz17.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz18.jpg">
+<meta property="og:image" content="https://weibo.com/images/r21.png">
+<meta property="og:image" content="https://weibo.com/images/r16.png">
+<meta property="og:image" content="https://weibo.com/images/r17.png">
+<meta property="og:image" content="https://weibo.com/images/r18.png">
+<meta property="og:image" content="https://weibo.com/images/r19.png">
+<meta property="og:image" content="https://weibo.com/images/r20.png">
+<meta property="og:image" content="https://weibo.com/images/r22.png">
+<meta property="og:image" content="https://weibo.com/images/rz20.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz21.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz22.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz23.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz24.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz25.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz26.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz27.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz28.jpg">
+<meta property="og:image" content="https://weibo.com/images/rz29.jpg">
+<meta property="og:updated_time" content="2019-06-12T17:08:04.253Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用户认证与授权">
+<meta name="twitter:description" content="什么是有状态的登陆？&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;解释：服务端需要记录每次会话的客户端信息，从而识别客户端身份，根据用户身份进行请求的处理，例如tomcat的session。 用户登陆后，我们把登陆者的信息保存在服务端session中，并赋给用户一个cookie值，记录对应的session。然后下次请求，用户携带cookie请求，我们就能识别到对应的session，从">
+<meta name="twitter:image" content="https://weibo.com/images/rz1.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/05/01/xuecheng3/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>用户认证与授权 | Asteryxx</title>
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/asteryxxx/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Asteryxx</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/05/01/xuecheng3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="彭摆鱼">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Asteryxx">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">用户认证与授权
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-01 00:43:01" itemprop="dateCreated datePublished" datetime="2019-05-01T00:43:01+08:00">2019-05-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-13 01:08:04" itemprop="dateModified" datetime="2019-06-13T01:08:04+08:00">2019-06-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/后端/" itemprop="url" rel="index"><span itemprop="name">后端</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>什么是有状态的登陆？</strong><br><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;解释：服务端需要记录每次会话的客户端信息，从而识别客户端身份，根据用户身份进行请求的处理，例如tomcat的session。 用户登陆后，我们把登陆者的信息保存在服务端session中，并赋给用户一个cookie值，记录对应的session。然后下次请求，用户携带cookie请求，我们就能识别到对应的session，从而找到用户的信息</small><br><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;缺点：服务端需要存大量数据，增加服务端压力，客户端请求依赖服务端</small></p>
+<p><strong>什么是无状态的登陆？</strong><br><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;微服务集群中的每个服务，对外提供的都是Rest风格的接口。而Rest风格的一个最重要的规范就是：服务的无状态性，即：</small></p>
+<blockquote>
+<ul>
+<li><small>1 ): 服务端不保存任何客户端请求者信息</small></li>
+<li><small>2 ): 客户端的每次请求必须具备自描述信息，通过这些信息识别客户端身份</small></li>
+</ul>
+</blockquote>
+<p><strong>加密算法</strong><br><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;解释：加密技术是对信息进行编码和解码的技术，编码是把明文译成密文，其逆过程就是解码（解密）</small></p>
+<blockquote>
+<ul>
+<li><small>1 ):对称加密，如AES；基本原理：将明文分成N个组，然后使用密钥对各个组进行加密，形成各自的密文，最后把所有的分组密文进行合并，形成最终的密文。</small></li>
+<li><small>2 ):非对称加密，如RSA ；基本原理：同时生成两把密钥：私钥和公钥，私钥隐秘保存，公钥可以下发给信任客户端，私钥加密，持有私钥或公钥才可以解密，公钥加密，持有私钥才可解密</small></li>
+<li><small>3 ):不可逆加密，如MD5，SHA； 基本原理：加密过程中不需要使用密钥，输入明文后由系统直接经过加密算法处理成密文，这种加密后的数据。是无法被解密的，无法根据密文推算出明文</small><a id="more"></a>
+<strong>token是识别客户端身份的唯一标示，采用何种方式加密才是安全可靠的呢？</strong><br><u><small>答：我们将采用JWT + RSA非对称加密</small></u></li>
+</ul>
+</blockquote>
+<p><strong>OAuth2允许不同的客户端通过认证和授权的形式访问被保护起来的资源。有这三种角色：</strong></p>
+<blockquote>
+<ul>
+<li><small>1 ): 授权服务器：对用户身份进行认证，对访问资源进行授权</small></li>
+<li><small>2 ): 资源服务器：存储资源的服务器</small></li>
+<li><small>3 ): 客户端：需要通过用户的授权去请求资源服务器的资源，例如：微信客户端</small></li>
+<li><small>4 ): 资源拥有者：通常为用户，也可以是应用程序</small><br><img src="/images/rz1.jpg" alt="image1"></li>
+</ul>
+</blockquote>
+<p><strong>Oauth2接入资源服务进行授权配置</strong></p>
+<blockquote>
+<ul>
+<li><small>1 ): 1、配置公钥：认证服务生成令牌采用非对称加密算法，认证服务采用私钥加密生成令牌，对外向资源服务提供公钥，资源服务使用公钥来校验令牌的合法性。</small></li>
+<li><small>2 ): 将公钥拷贝到 publickey.txt文件中，将此文件拷贝到资源服务工程的classpath下 </small></li>
+<li><small>3 ): 加入依赖 <img src="/images/rz12.jpg" alt="image1"></small></li>
+<li><small>4 ): 在config包下创建ResourceServerConfig类：<img src="/images/rz13.jpg" alt="image1"></small><br><small>测试发现：<img src="/images/rz14.jpg" alt="image1"></small><br><small>请求时携带令牌：在http header中添加 Authorization： Bearer 令牌：<img src="/images/rz15.jpg" alt="image1"></small></li>
+</ul>
+</blockquote>
+<p><strong><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该项目中Oauth2采用的是密码模式，通过用户名和密码即可申请令牌。申请流程如下</small></strong></p>
+<blockquote>
+<ul>
+<li><small>1 ): Post请求：<a href="http://localhost:40400/auth/oauth/token" target="_blank" rel="noopener">http://localhost:40400/auth/oauth/token</a></small></li>
+<li><small>2 ): 需要这几个参数：<br>   grant_type:填写password，表示密码模式<br>   username：账号<br>   password：密码<br>   redirect_uri:申请授权码时跳转的url  </small></li>
+</ul>
+</blockquote>
+<p><img src="/images/rz2.jpg" alt="image1"><br><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;客户端Id和客户端密码会匹配数据库oauth_client_details表中的客户端id及客户端密码↓↓</small><br><img src="/images/rz4.jpg" alt="image1"><br><img src="/images/rz3.jpg" alt="image1"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;申请令牌成功的几个参数：↓↓</p>
+<blockquote>
+<ul>
+<li><small>1 ):  <strong>   access_token：访问令牌,完整的令牌 </strong></small></li>
+<li><small>2 ): <strong>   token_type：0建议Oauth2采用 Bearer Token</strong></small></li>
+<li><small>3 ): <strong>  refresh_token:刷新令牌</strong></small></li>
+<li><small>4 ):   <strong> expires_in:过期时间</strong></small></li>
+<li><small>5 ):  <strong>  scope:与定义的客户端范围一致</strong></small></li>
+<li><small>6 ):  <strong>  jti：身份令牌（短的令牌）</strong></small></li>
+</ul>
+</blockquote>
+<p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>刷新令牌</strong>：当令牌快过期时重新生成一个令牌，刷新令牌不需要授权码也不需要账号和密码，只需要一个刷新令牌、客户端id和客户端密码</p>
+<blockquote>
+<ul>
+<li><small>1 ):   <strong> Post：<a href="http://localhost:40400/auth/oauth/token" target="_blank" rel="noopener">http://localhost:40400/auth/oauth/token</a></strong></small></li>
+<li><small>2 ):  <strong> grant_type ： 固定为 refresh_token</strong></small></li>
+<li><small>3 ):  <strong> refresh_token：刷新令牌</strong></small></li>
+</ul>
+</blockquote>
+<p><img src="/images/rz5.jpg" alt="image1"></p>
+<p><strong>JWT研究</strong><br><small>在没有jwt令牌之前的校验方法：</small><br><img src="/images/rz6.jpg" alt="image1"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small> <strong>问题所在</strong>：在传统授权，用户每次请求资源服务，资源服务都需要携带令牌访问认证服务去校验令牌的合法性，并根据令牌获取用户的相关信息，性能低下。</small><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small> <strong>解决方法</strong>：使用JWT的思路是，用户认证通过会得到一个JWT令牌，JWT令牌中已经包括了用户相关的信息，客户端只需要携带JWT访问资源服务，资源服务根据事先约定的算法自行完成令牌校验，无需每次都请求认证服务完成授权</small><br><img src="/images/rz7.jpg" alt="image1"></p>
+<p><u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>jwt（JSON风格轻量级的授权和身份认证规范）是一种开放的标准，标准就是将各个主体的信息包装成json对象，主体信息是通过数字签名进行加密和验证，常使用HMAC算法或者RSA对JWT进行签名。</small></u><br>JWT包含三部分：</p>
+<blockquote>
+<ul>
+<li><small>1 ):   <strong>  Header：头部，通常头部有两部分信息：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;声明类型，这里是JWT<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  加密算法，自定义<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  我们会对头部进行base64加密（可解密），得到第一部分数据<br> <img src="/images/rz8.jpg" alt="image1">
+ </strong></small></li>
+<li><small>2 ):  <strong> Payload：载荷，就是有效数据，一般包含下面信息：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户身份信息和声明claim（注意，这里因为采用base64加密，可解密，因此不要存放敏感信息）<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注册声明：如token的签发时间，过期时间，签发人等<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这部分也会采用base64加密，得到第二部分数据<br>  <img src="/images/rz9.jpg" alt="image1">
+</strong></small></li>
+<li><small>3 ):  <strong> Signature：签名，是整个数据的认证信息。一般根据前两步的数据，再加上服务的的密钥，通过加密算法生成。用于验证整个数据完整和可靠性</strong></small></li>
+</ul>
+</blockquote>
+<p>格式如下：<br>      <img src="/images/rz10.jpg" alt="image1"></p>
+<p> <strong><small>生成私钥和公钥</small></strong><br>      <img src="/images/rz11.jpg" alt="image1"> <img src="/images/rz11.png" alt="image1">  <img src="/images/rz12.png" alt="image1"></p>
+<p> <strong><small>查询证书信息：Keytool –list –keystore xc.keystore </small></strong><br><img src="/images/rz13.png" alt="image1"><br> <strong><small>导出公钥</small></strong><br><img src="/images/rz14.png" alt="image1"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;把Public key复制出来，删掉换行弄成一行 <img src="/images/rz15.png" alt="image1"><br> <strong><small>使用代码通过私钥生成jwt令牌</small></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//生成一个jwt令牌</span><br><span class="line">@Test</span><br><span class="line">public void testCreateJwt()&#123;</span><br><span class="line">    //证书文件</span><br><span class="line">    String key_location = &quot;xc.keystore&quot;;</span><br><span class="line">    //密钥库密码</span><br><span class="line">    String keystore_password = &quot;xuechengkeystore&quot;;</span><br><span class="line">    //访问证书路径</span><br><span class="line">    ClassPathResource resource = new ClassPathResource(key_location);</span><br><span class="line">    //密钥工厂</span><br><span class="line">    KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(resource,</span><br><span class="line">keystore_password.toCharArray());</span><br><span class="line">    //密钥的密码，此密码和别名要匹配</span><br><span class="line">    String keypassword = &quot;xuecheng&quot;;</span><br><span class="line">    //密钥别名</span><br><span class="line">    String alias = &quot;xckey&quot;;</span><br><span class="line">    //密钥对（密钥和公钥）</span><br><span class="line">    KeyPair keyPair = keyStoreKeyFactory.getKeyPair(alias,keypassword.toCharArray());</span><br><span class="line">    //私钥</span><br><span class="line">    RSAPrivateKey aPrivate = (RSAPrivateKey) keyPair.getPrivate();</span><br><span class="line">    //定义payload信息</span><br><span class="line">    Map&lt;String, Object&gt; tokenMap = new HashMap&lt;&gt;();</span><br><span class="line">    tokenMap.put(&quot;id&quot;, &quot;123&quot;);</span><br><span class="line">    tokenMap.put(&quot;name&quot;, &quot;mrt&quot;);</span><br><span class="line">    tokenMap.put(&quot;roles&quot;, &quot;r01,r02&quot;);</span><br><span class="line">    tokenMap.put(&quot;ext&quot;, &quot;1&quot;);</span><br><span class="line">    //生成jwt令牌</span><br><span class="line">    Jwt jwt = JwtHelper.encode(JSON.toJSONString(tokenMap), new RsaSigner(aPrivate));</span><br><span class="line">    //取出jwt令牌</span><br><span class="line">    String token = jwt.getEncoded();</span><br><span class="line">    System.out.println(&quot;token=&quot;+token);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//资源服务使用公钥验证jwt的合法性，并对jwt解码</span><br><span class="line">    @Test</span><br><span class="line">    public void testVerify()&#123;</span><br><span class="line">        //jwt令牌</span><br><span class="line">        String token</span><br><span class="line">=&quot;eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHQiOiIxIiwicm9sZXMiOiJyMDEscjAyIiwibmFtZSI6Im1ydCIsI</span><br><span class="line">mlkIjoiMTIzIn0.KK7_67N5d1Dthd1PgDHMsbi0UlmjGRcm_XJUUwseJ2eZyJJWoPP2IcEZgAU3tUaaKEHUf9wSRwaDgwhrw</span><br><span class="line">fyIcSHbs8oy3zOQEL8j5AOjzBBs7vnRmB7DbSaQD7eJiQVJOXO1QpdmEFgjhc_IBCVTJCVWgZw60IEW1_Lg5tqaLvCiIl26K</span><br><span class="line">48pJB5f‐le2zgYMzqR1L2LyTFkq39rG57VOqqSCi3dapsZQd4ctq95SJCXgGdrUDWtD52rp5o6_0uq‐</span><br><span class="line">mrbRdRxkrQfsa1j8C5IW2‐T4eUmiN3f9wF9JxUK1__XC1OQkOn‐ZTBCdqwWIygDFbU7sf6KzfHJTm5vfjp6NIA&quot;;</span><br><span class="line">        //公钥</span><br><span class="line">        String publickey = &quot;‐‐‐‐‐BEGIN PUBLIC KEY‐‐‐‐‐</span><br><span class="line">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAijyxMdq4S6L1Af1rtB8SjCZHNgsQG8JTfGy55eYvzG0B/E4AudR2</span><br><span class="line">prSRBvF7NYPL47scRCNPgLnvbQczBHbBug6uOr78qnWsYxHlW6Aa5dI5NsmOD4DLtSw8eX0hFyK5Fj6ScYOSFBz9cd1nNTvx</span><br><span class="line">2+oIv0lJDcpQdQhsfgsEr1ntvWterZt/8r7xNN83gHYuZ6TM5MYvjQNBc5qC7Krs9wM7UoQuL+s0X6RlOib7/mcLn/lFLsLD</span><br><span class="line">dYQAZkSDx/6+t+1oHdMarChIPYT1sx9Dwj2j2mvFNDTKKKKAq0cv14Vrhz67Vjmz2yMJePDqUi0JYS2r0iIo7n8vN7s83v5u</span><br><span class="line">OQIDAQAB‐‐‐‐‐END PUBLIC KEY‐‐‐‐‐&quot;;</span><br><span class="line">        //校验jwt</span><br><span class="line">        Jwt jwt = JwtHelper.decodeAndVerify(token, new RsaVerifier(publickey));</span><br><span class="line">        //获取jwt原始内容</span><br><span class="line">        String claims = jwt.getClaims();</span><br><span class="line">        //jwt令牌</span><br><span class="line">        String encoded = jwt.getEncoded();</span><br><span class="line">        System.out.println(encoded);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<!-- more -->
+<p><strong><center>该项目中：用户登录的流程图如下：</center></strong><br><img src="/images/rz16.jpg" alt="image1"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>执行流程：</strong><br><small>1、用户登录，请求认证服务<br>2、认证服务认证通过，生成jwt令牌，将jwt令牌及相关信息写入Redis，并且将身份令牌写入cookie(Access_token是完整的jwt令牌，refresh_token是刷新令牌。Jti:是简短的用户身份令牌，在redis存access_token，在cookie存的是jti。)<br>3、用户访问资源页面，带着cookie到网关<br>4、网关从cookie获取token，并查询Redis校验token,如果token不存在则拒绝访问，否则放行<br>5、用户退出，请求认证服务，清除redis中的token，并且删除cookie中的token</small><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>使用redis存储用户的身份令牌有以下作用：</strong><br><small>1、实现用户退出注销功能，服务端清除令牌后，即使客户端请求携带token也是无效的。<br>2、因为jwt完整的令牌太长了，前端如果需要用jwt令牌，可以携带身份令牌jti去请求认证服务拿的jwt长令牌。短的令牌存到cookie，前端携带短的令牌访问网关，拿着短令牌去redis查到对应的长令牌，用户对应的信息，进行校验，如果查到了没过期，就允许继续访问，否则拒绝访问！！！</small></p>
+<p><strong><center>认证服务的业务流程如下：</center></strong><br><img src="/images/rz17.jpg" alt="image1"><br><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;前端认证请求去到 认证服务ucenter-auth，认证服务要去申请令牌，会请求到spring security去申请到令牌，然后security是基于oauth2的协议，可以走密码方式认证。security会去调用UserDetailServiceImpl的方法 。如果这个方法返回的是空的，代表账号不存在；不是空就得到数据库正确的密码，会把密码和权限通通封装成userJwt的对象，该类是扩展类，我们准备存储用户的类型，头像，公司id等等。Security接下里就会比较返回的UserDetails里的密码和前端输入的密码是否一致，如果一致就发放令牌；否则就提示凭证错误</small><br><img src="/images/rz18.jpg" alt="image1"></p>
+<p><strong><center>通过RestTemplate请求Spring Security所暴露的申请令牌接口来申请令牌</center></strong><br><small>认证服务会把自己注册到eureka，可能是个集群！！建议从eureka中获取认证服务地址</small><img src="/images/r21.png" alt="image1"><br><img src="/images/r16.png" alt="image1"><small>请求的body里面有数据，头信息也有数据。Httpentity可以设置Body和headers</small><img src="/images/r17.png" alt="image1"><img src="/images/r18.png" alt="image1"><img src="/images/r19.png" alt="image1"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">@SpringBootTest</span><br><span class="line">@RunWith(SpringRunner.class)</span><br><span class="line">public class TestClient &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    LoadBalancerClient loadBalancerClient;</span><br><span class="line">    @Autowired</span><br><span class="line">    RestTemplate restTemplate;</span><br><span class="line">    @Test</span><br><span class="line">    public void testClient()&#123;</span><br><span class="line">        //采用客户端负载均衡，从eureka获取认证服务的ip 和端口</span><br><span class="line">        ServiceInstance serviceInstance =</span><br><span class="line">loadBalancerClient.choose(XcServiceList.XC_SERVICE_UCENTER_AUTH);</span><br><span class="line">        URI uri = serviceInstance.getUri();</span><br><span class="line">        String authUrl = uri+&quot;/auth/oauth/token&quot;;</span><br><span class="line"></span><br><span class="line">        //URI url, HttpMethod method, HttpEntity&lt;?&gt; requestEntity, Class&lt;T&gt; responseType</span><br><span class="line">        // url就是 申请令牌的url /oauth/token</span><br><span class="line">        //method http的方法类型</span><br><span class="line">        //requestEntity请求内容</span><br><span class="line">        //responseType，将响应的结果生成的类型</span><br><span class="line">        //请求的内容分两部分</span><br><span class="line">        //1、header信息，包括了http basic认证信息</span><br><span class="line">        MultiValueMap&lt;String, String&gt; headers = new LinkedMultiValueMap&lt;String, String&gt;();</span><br><span class="line">        String httpbasic = httpbasic(&quot;XcWebApp&quot;, &quot;XcWebApp&quot;);</span><br><span class="line">        //&quot;Basic WGNXZWJBcHA6WGNXZWJBcHA=&quot;</span><br><span class="line">        headers.add(&quot;Authorization&quot;, httpbasic);</span><br><span class="line">        //2、包括：grant_type、username、passowrd</span><br><span class="line">        MultiValueMap&lt;String, String&gt; body = new LinkedMultiValueMap&lt;String, String&gt;();</span><br><span class="line">        body.add(&quot;grant_type&quot;,&quot;password&quot;);</span><br><span class="line">        body.add(&quot;username&quot;,&quot;itcast&quot;);</span><br><span class="line">        body.add(&quot;password&quot;,&quot;123&quot;);</span><br><span class="line">        HttpEntity&lt;MultiValueMap&lt;String, String&gt;&gt; multiValueMapHttpEntity = new</span><br><span class="line">HttpEntity&lt;MultiValueMap&lt;String, String&gt;&gt;(body, headers);</span><br><span class="line">//指定 restTemplate当遇到400或401响应时候也不要抛出异常，也要正常返回值        </span><br><span class="line">        restTemplate.setErrorHandler(new DefaultResponseErrorHandler()&#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void handleError(ClientHttpResponse response) throws IOException &#123;</span><br><span class="line">                //当响应的值为400或401时候也要正常响应，不要抛出异常</span><br><span class="line">                if(response.getRawStatusCode()!=400 &amp;&amp; response.getRawStatusCode()!=401)&#123;</span><br><span class="line">                    super.handleError(response);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        //远程调用申请令牌</span><br><span class="line">        ResponseEntity&lt;Map&gt; exchange = restTemplate.exchange(authUrl, HttpMethod.POST,</span><br><span class="line">multiValueMapHttpEntity, Map.class);</span><br><span class="line">        Map body1 = exchange.getBody();</span><br><span class="line">        System.out.println(body1);</span><br><span class="line">    &#125;</span><br><span class="line">    private String httpbasic(String clientId,String clientSecret)&#123;</span><br><span class="line">        //将客户端id和客户端密码拼接，按“客户端id:客户端密码”</span><br><span class="line">        String string = clientId+&quot;:&quot;+clientSecret;</span><br><span class="line">        //进行base64编码</span><br><span class="line">        byte[] encode = Base64.encode(string.getBytes());</span><br><span class="line">        return &quot;Basic &quot;+new String(encode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/r20.png" alt="image1">测试结果：<img src="/images/r22.png" alt="image1"><strong><center> 用户认证流程如下：</center></strong><br><img src="/images/rz20.jpg" alt="image1"><img src="/images/rz21.jpg" alt="image1"><img src="/images/rz22.jpg" alt="image1"><strong><center>网关进行身份校验流程：</center></strong><br><small>1、从cookie查询用户身份令牌是否存在，不存在则拒绝访问</small><br><small>2、从http header查询jwt令牌是否存在，不存在则拒绝访问</small><br><small>3 、从Redis查询user_token令牌是否过期，过期则拒绝访问</small><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class AuthService &#123;</span><br><span class="line">    @Autowired</span><br><span class="line">    StringRedisTemplate stringRedisTemplate;</span><br><span class="line">    //查询身份令牌</span><br><span class="line">    public String getTokenFromCookie(HttpServletRequest request)&#123;</span><br><span class="line">        Map&lt;String, String&gt; cookieMap = CookieUtil.readCookie(request, &quot;uid&quot;);</span><br><span class="line">        String access_token = cookieMap.get(&quot;uid&quot;);</span><br><span class="line">        if(StringUtils.isEmpty(access_token))&#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        return access_token;</span><br><span class="line">    &#125;</span><br><span class="line">    //从header中查询jwt令牌</span><br><span class="line">    public String getJwtFromHeader(HttpServletRequest request)&#123;</span><br><span class="line">        String authorization = request.getHeader(&quot;Authorization&quot;);</span><br><span class="line">        if(StringUtils.isEmpty(authorization))&#123;</span><br><span class="line">            //拒绝访问</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if(!authorization.startsWith(&quot;Bearer &quot;))&#123;</span><br><span class="line">            //拒绝访问</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        return authorization;</span><br><span class="line">    &#125;</span><br><span class="line">    //查询令牌的有效期</span><br><span class="line">    public long getExpire(String access_token) &#123;</span><br><span class="line">        //token在redis中的key</span><br><span class="line">        String key = &quot;user_token:&quot;+access_token;</span><br><span class="line">        Long expire = stringRedisTemplate.getExpire(key);</span><br><span class="line">        return expire;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>定义LoginFilter<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class LoginFilter extends ZuulFilter &#123;</span><br><span class="line">    private static final Logger LOGG = LoggerFactory.getLogger(LoginFilter.class);</span><br><span class="line">    @Autowired</span><br><span class="line">    AuthService authService;</span><br><span class="line">    @Override</span><br><span class="line">    public String filterType() &#123;</span><br><span class="line">        //四种类型：pre、routing、post、error</span><br><span class="line">        return &quot;pre&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public int filterOrder() &#123;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public boolean shouldFilter() &#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public Object run() &#123;</span><br><span class="line">        //上下文对象</span><br><span class="line">        RequestContext requestContext = RequestContext.getCurrentContext();</span><br><span class="line">        //请求对象</span><br><span class="line">        HttpServletRequest request = requestContext.getRequest();</span><br><span class="line">        //查询身份令牌</span><br><span class="line">        String access_token = authService.getTokenFromCookie(request);</span><br><span class="line">        if(access_token == null)&#123;</span><br><span class="line">//拒绝访问</span><br><span class="line">            access_denied();</span><br><span class="line">        &#125;</span><br><span class="line">        //从redis中校验身份令牌是否过期</span><br><span class="line">        long expire = authService.getExpire(access_token);</span><br><span class="line">        if(expire&lt;=0)&#123;</span><br><span class="line">            //拒绝访问</span><br><span class="line">            access_denied();</span><br><span class="line">        &#125;</span><br><span class="line">        //查询jwt令牌</span><br><span class="line">        String jwt = authService.getJwtFromHeader(request);</span><br><span class="line">        if(jwt == null)&#123;</span><br><span class="line">            //拒绝访问</span><br><span class="line">            access_denied();</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">    //拒绝访问</span><br><span class="line">    private void access_denied()&#123;</span><br><span class="line">        //上下文对象</span><br><span class="line">        RequestContext requestContext = RequestContext.getCurrentContext();</span><br><span class="line">        requestContext.setSendZuulResponse(false);//拒绝访问</span><br><span class="line">        //设置响应内容</span><br><span class="line">        ResponseResult responseResult =new ResponseResult(CommonCode.UNAUTHENTICATED);</span><br><span class="line">        String responseResultString = JSON.toJSONString(responseResult);</span><br><span class="line">        requestContext.setResponseBody(responseResultString);</span><br><span class="line">        //设置状态码</span><br><span class="line">        requestContext.setResponseStatusCode(200);</span><br><span class="line">        HttpServletResponse response = requestContext.getResponse();</span><br><span class="line">        response.setContentType(&quot;application/json;charset=utf‐8&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><small>测试：Get请求：<a href="http://www.xuecheng.com/api/course/coursebase/get/4028e581617f945f01617f9dabc40000" target="_blank" rel="noopener">http://www.xuecheng.com/api/course/coursebase/get/4028e581617f945f01617f9dabc40000</a><br>注意：这里通过网关请求了 course/coursebase/get地址，课程管理url根据自己的开发情况去配置，<br>1、正常流程测试<br>a、执行登录使之向cookie写入身份令牌uid<br>Post请求：<a href="http://ucenter.xuecheng.com/openapi/auth/userlogin" target="_blank" rel="noopener">http://ucenter.xuecheng.com/openapi/auth/userlogin</a></small><br><img src="/images/rz23.jpg" alt="image1">手动在postman添加header<img src="/images/rz24.jpg" alt="image1"><br><strong>用户授权业务流程如下</strong><br><img src="/images/rz25.jpg" alt="image1">方法授权要完成的是资源服务根据jwt令牌完成对方法的授权，具体流程如下：<br><small>1、生成Jwt令牌时在令牌中写入用户所拥有的权限<br>我们给每个权限起个名字，例如某个用户拥有如下权限：<br>course_find_list：课程查询<br>course_pic_list：课程图片查询<br>2、在资源服务方法上添加注解PreAuthorize，并指定此方法所需要的权限<br>例如下边是课程管理接口方法的授权配置，它就表示要执行这个方法需要拥有course_find_list权限。</small><img src="/images/rz26.jpg" alt="image1"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//指定用户的权限，这里暂时硬编码</span><br><span class="line">        List&lt;String&gt; permissionList = new ArrayList&lt;&gt;();</span><br><span class="line">        permissionList.add(&quot;course_get_baseinfo&quot;);</span><br><span class="line">        permissionList.add(&quot;course_find_pic&quot;);</span><br><span class="line">        //将权限串中间以逗号分隔</span><br><span class="line">        String permissionString = StringUtils.join(permissionList.toArray(), &quot;,&quot;);</span><br><span class="line">        //String user_permission_string = &quot;&quot;;</span><br><span class="line">        UserJwt userDetails = new UserJwt(username,</span><br><span class="line">                password,</span><br><span class="line">                AuthorityUtils.commaSeparatedStringToAuthorityList(permissionString));</span><br></pre></td></tr></table></figure></p>
+<p>重启认证服务工程，使用 postman完成登录，从redis中找到jwt令牌。使用jwt的测试程序查看 此令牌的内容<img src="/images/rz27.jpg" alt="image1"><strong><center>资源服务添加授权控制</center></strong><br>   <small>要想在资源服务使用方法授权，首先在资源服务配置授权控制</small></p>
+<blockquote>
+<ul>
+<li>1）添加spring-cloud-starter-oauth2依赖。</li>
+<li>2）拷贝授权配置类ResourceServerConfig。<br><img src="/images/rz28.jpg" alt="image1"></li>
+<li>3）在方法添加授权注解。<img src="/images/rz29.jpg" alt="image1"></li>
+</ul>
+</blockquote>
+<p><strong>动态通过用户中心查询用户权限</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//根据账号查询用户的信息，返回用户扩展信息</span><br><span class="line">public XcUserExt getUserExt(String username)&#123;</span><br><span class="line">    XcUser xcUser = this.findXcUserByUsername(username);</span><br><span class="line">    if(xcUser == null)&#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">    //根据用户id查询用户权限</span><br><span class="line">    String userId = xcUser.getId();</span><br><span class="line">    List&lt;XcMenu&gt; xcMenus = xcMenuMapper.selectPermissionByUserId(userId);</span><br><span class="line">    XcUserExt xcUserExt = new XcUserExt();</span><br><span class="line">    BeanUtils.copyProperties(xcUser,xcUserExt);</span><br><span class="line">    //用户的权限</span><br><span class="line">    xcUserExt.setPermissions(xcMenus);</span><br><span class="line">    return xcUserExt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>修改认证服务的UserDetailServiceImpl，查询用户的权限，并拼接权限串，将原来硬编码权限代码删除，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> //请求ucenter查询用户</span><br><span class="line">	XcUserExt userext = userClient.getUserext(username);</span><br><span class="line">        if(userext == null)&#123;</span><br><span class="line">            //返回NULL表示用户不存在，Spring Security会抛出异常</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        //从数据库查询用户正确的密码，Spring Security会去比对输入密码的正确性</span><br><span class="line">        String password = userext.getPassword();</span><br><span class="line">        //指定用户的权限，这里暂时硬编码</span><br><span class="line">        List&lt;String&gt; permissionList = new ArrayList&lt;&gt;();</span><br><span class="line">//        permissionList.add(&quot;course_get_baseinfo&quot;);</span><br><span class="line">//        permissionList.add(&quot;course_find_pic&quot;);</span><br><span class="line">        //取出用户权限</span><br><span class="line">        List&lt;XcMenu&gt; permissions = userext.getPermissions();</span><br><span class="line">        for(XcMenu xcMenu:permissions)&#123;</span><br><span class="line">            permissionList.add(xcMenu.getCode());</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong><center>单页面应用校验</center></strong><br><small>教学管理中心是单页面应用，我们在路由变化时校验用户的身份，校验失败将跳转到登录页面。<br>校验方法如下：<br>1、如果成功从sessionStorage和cookie获取当前用户则继续访问<br>2、如果sessionStorage中无当前用户，cookie中有当前用户则请求服务端获取jwt，如果成功则继续访问。<br>3、以上两种情况都不满足则跳转到登录页面</small><br><strong><center>前端显示当前用户</center></strong><br><small>1、用户请求认证服务，登录成功。<br>2、用户登录成功，认证服务向cookie写入身份令牌，向redis写入user_token（身份令牌及授权jwt授权令牌）<br>3、客户端携带cookie中的身份令牌请求认证服务获取jwt令牌。<br>4、客户端解析jwt令牌，并将解析的用户信息存储到sessionStorage中。<br>jwt令牌中包括了用户的基本信息，客户端解析jwt令牌即可获取用户信息。<br>5、客户端从sessionStorage中读取用户信息，并在页头显示。</small></p>
+<p>sessionStorage ：<br>sessionStorage 是H5的一个会话存储对象，在SessionStorage中保存的数据只在同一窗口或同一标签页中有效，<br>在关闭窗口之后将会删除SessionStorage中的数据。<br>seesionStorage的存储方式采用key/value的方式，可保存5M左右的数据（不同的浏览器会有区别）</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById(&quot;QR&quot;); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="彭摆鱼 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="彭摆鱼 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"><i class="fa fa-diamond"></i> java</a>
+          
+            <a href="/tags/内容管理系统/" rel="tag"><i class="fa fa-diamond"></i> 内容管理系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/21/dxc2/" rel="next" title="CountDownLatch">
+                <i class="fa fa-chevron-left"></i> CountDownLatch
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/09/10/es6(1)/" rel="prev" title="es6总结常用">
+                es6总结常用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg" alt="彭摆鱼">
+            
+              <p class="site-author-name" itemprop="name">彭摆鱼</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/asteryxxx" title="GitHub &rarr; https://github.com/asteryxxx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/437767931@qq.com" title="E-Mail &rarr; 437767931@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/yourname" title="Weibo &rarr; https://weibo.com/yourname"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://pyy.com" title="http://pyy.com" rel="noopener" target="_blank">pengyuyan</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彭摆鱼</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/three/three.min.js"></script>
+
+  
+  <script src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/love.js"></script>
+
+
+
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
+

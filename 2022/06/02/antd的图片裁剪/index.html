@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="工作中需要对图片进行图片裁剪的要求，于是这里做个笔记：   首先贴一段代码，需要安装【react-cropper】这个插件  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273">
+<meta name="keywords" content="前端,react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="antd的图片裁剪">
+<meta property="og:url" content="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2022/06/02/antd的图片裁剪/index.html">
+<meta property="og:site_name" content="Asteryxx">
+<meta property="og:description" content="工作中需要对图片进行图片裁剪的要求，于是这里做个笔记：   首先贴一段代码，需要安装【react-cropper】这个插件  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://weibo.com/images/antd_pictureCropper1.png">
+<meta property="og:updated_time" content="2022-09-06T08:20:03.480Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="antd的图片裁剪">
+<meta name="twitter:description" content="工作中需要对图片进行图片裁剪的要求，于是这里做个笔记：   首先贴一段代码，需要安装【react-cropper】这个插件  12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273">
+<meta name="twitter:image" content="https://weibo.com/images/antd_pictureCropper1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2022/06/02/antd的图片裁剪/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>antd的图片裁剪 | Asteryxx</title>
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/asteryxxx/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Asteryxx</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2022/06/02/antd的图片裁剪/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="彭摆鱼">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Asteryxx">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">antd的图片裁剪
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2022-06-02 16:08:28" itemprop="dateCreated datePublished" datetime="2022-06-02T16:08:28+08:00">2022-06-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2022-09-06 16:20:03" itemprop="dateModified" datetime="2022-09-06T16:20:03+08:00">2022-09-06</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/antd/" itemprop="url" rel="index"><span itemprop="name">antd</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>工作中需要对图片进行图片裁剪的要求，于是这里做个笔记：</strong></p>
+<p><img src="../images/antd_pictureCropper1.png" style="zoom:80%;"></p>
+<blockquote>
+<p>首先贴一段代码，需要安装【react-cropper】这个插件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br></pre></td><td class="code"><pre><span class="line">import &apos;./index.less&apos;;</span><br><span class="line">import &#123; Tooltip, Button, Modal, message &#125; from &apos;antd&apos;;</span><br><span class="line">import React, &#123; useRef, useState, useEffect &#125; from &apos;react&apos;;</span><br><span class="line">import &#123; closePic &#125; from &apos;@/pages/DataBases/setting/picutils&apos;;</span><br><span class="line">import &#123; useToggleVal &#125; from &apos;@/utils/hook/common&apos;;</span><br><span class="line">import Cropper from &apos;react-cropper&apos; // 引入Cropper</span><br><span class="line">import &apos;cropperjs/dist/cropper.css&apos; // 引入Cropper对应的css</span><br><span class="line">//阿里巴巴矢量图标库引入</span><br><span class="line">import &#123; createFromIconfontCN &#125; from &apos;@ant-design/icons&apos;;</span><br><span class="line">import &#123; uploadImage &#125; from &apos;../../../server&apos;;</span><br><span class="line">import &#123; editDocById &#125; from &apos;@/pages/DataBases/setting/topicManageNew/server&apos;;</span><br><span class="line"></span><br><span class="line">const IconFont = createFromIconfontCN(&#123;</span><br><span class="line">  scriptUrl: &apos;//at.alicdn.com/t/c/font_3573782_amwh7c9a9wd.js&apos;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">export function useToggleVal(initial?: number) &#123;</span><br><span class="line">  const [_flag, _setFlag] = useState(initial)</span><br><span class="line">  const setFlag = useCallback(() =&gt; &#123;</span><br><span class="line">    _setFlag(prev =&gt; &#123;</span><br><span class="line">      return prev === 1 ? -1 : 1</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;, [])</span><br><span class="line">  return [_flag, setFlag]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const renderButStr = &#123;</span><br><span class="line">  &apos;icon-yidong&apos;: &apos;移动&apos;,</span><br><span class="line">  &apos;icon-caijian&apos;: &apos;裁剪&apos;,</span><br><span class="line">  &apos;icon-left-rotate&apos;: &apos;左旋转&apos;,</span><br><span class="line">  &apos;icon-right-rotate&apos;: &apos;右旋转&apos;,</span><br><span class="line">  &apos;icon-scaleX&apos;: &apos;水平翻转&apos;,</span><br><span class="line">  &apos;icon-scaleY&apos;: &apos;上下翻转&apos;,</span><br><span class="line">  &apos;icon-clear&apos;: &apos;清空&apos;,</span><br><span class="line">  &apos;icon-reset&apos;: &apos;复原&apos;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const CropperEditPic = (props) =&gt; &#123;</span><br><span class="line">  const &#123; cropperPic, cropperVisible, setCropperVisible, curRow, updateItem &#125; = props;</span><br><span class="line">  const [imgUrl, setImgUrl] = useState&lt;string&gt;(&apos;&apos;);</span><br><span class="line">  const [_flag, setFlag] = useToggleVal(-1)</span><br><span class="line">  const [_flag2, setFlag2] = useToggleVal(-1)</span><br><span class="line">  const cropperRef = useRef(null);</span><br><span class="line">  const inputVal = useRef(null);</span><br><span class="line"></span><br><span class="line">  // 渲染按钮</span><br><span class="line">  const renderButton = (onClick1: Function, onClick2: Function, name1: string, name2: string, tipname1: string, tipname2: string) =&gt; &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div className=&apos;buttonGroup&apos;&gt;</span><br><span class="line">        &lt;Tooltip title=&#123;renderButStr[tipname1]&#125;&gt;</span><br><span class="line">          &lt;Button onClick=&#123;onClick1&#125; &gt;&lt;IconFont type=&#123;name1&#125; /&gt;&lt;/Button&gt;</span><br><span class="line">        &lt;/Tooltip&gt;</span><br><span class="line">        &lt;Tooltip title=&#123;renderButStr[tipname2]&#125;&gt;</span><br><span class="line">          &lt;Button className=&#123;name1 === name2 ? &apos;rotation_inverted&apos; : &apos;&apos;&#125; onClick=&#123;onClick2&#125; &gt;&lt;IconFont type=&#123;name2&#125; /&gt;&lt;/Button&gt;</span><br><span class="line">        &lt;/Tooltip&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const handleOk = () =&gt; &#123;</span><br><span class="line">    setCropperVisible();</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  const handleCancel = () =&gt; &#123;</span><br><span class="line">    setCropperVisible();</span><br><span class="line">  &#125;;</span><br><span class="line">   </span><br><span class="line">  // 选择文件的打开事件</span><br><span class="line">  const handleChangeFile = (e) =&gt; &#123;</span><br><span class="line">    console.log(e)</span><br><span class="line">    const file = e.target.files[0];</span><br><span class="line">    const blobData = window.URL.createObjectURL(file);</span><br><span class="line">    // 构造临时的url地址</span><br><span class="line">    setImgUrl(blobData);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  const moveClick = () =&gt; &#123;</span><br><span class="line">    cropperRef.current.cropper.setDragMode(&apos;move&apos;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const cropClick = () =&gt; &#123;</span><br><span class="line">    cropperRef.current.cropper.setDragMode(&apos;crop&apos;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const rotateClick = () =&gt; &#123;</span><br><span class="line">    cropperRef.current.cropper.rotate(45);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const rotateInvertedClick = () =&gt; &#123;</span><br><span class="line">    cropperRef.current.cropper.rotate(-45);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const transverseClick = () =&gt; &#123;</span><br><span class="line">    setFlag();</span><br><span class="line">    cropperRef.current.cropper.scaleX(_flag);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const verticalClick = () =&gt; &#123;</span><br><span class="line">    setFlag2();</span><br><span class="line">    cropperRef.current.cropper.scaleY(_flag2);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const largeClick = () =&gt; &#123;</span><br><span class="line">    cropperRef.current.cropper.zoom(0.1);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const smallClick = () =&gt; &#123;</span><br><span class="line">    cropperRef.current.cropper.zoom(-0.1);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const resetClick = () =&gt; &#123;</span><br><span class="line">    cropperRef.current.cropper.reset();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  const deleteClick = () =&gt; &#123;</span><br><span class="line">    cropperRef.current.cropper.clear()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  /* Uncaught DOMException: Failed to execute &apos;toDataURL&apos; on &apos;HTMLCanvasElement&apos;: Tainted canvases may not be exported.</span><br><span class="line">  canvas无法执行toDataURL方法：污染的画布无法输出，请原谅我的灵魂翻译。</span><br><span class="line">经google 发现原来是受限于 CORS 策略，会存在跨域问题，虽然可以使用图像（比如append到页面上）但是绘制到画布上会污染画布，</span><br><span class="line">一旦一个画布被污染, 就无法提取画布的数据，</span><br><span class="line">比如无法使用使用画布toBlob(), toDataURL(), 或getImageData()方法;当使用这些方法的时候 会抛出一个安全错误 */</span><br><span class="line">  const btnSubmit = () =&gt; &#123;</span><br><span class="line">    const params = &#123;</span><br><span class="line">      width: 160,</span><br><span class="line">      height: 90,</span><br><span class="line">      minWidth: 256,</span><br><span class="line">      minHeight: 256,</span><br><span class="line">      maxWidth: 4096,</span><br><span class="line">      maxHeight: 4096,</span><br><span class="line">      fillColor: &apos;#fff&apos;,</span><br><span class="line">      imageSmoothingEnabled: false,</span><br><span class="line">      imageSmoothingQuality: &apos;high&apos;,</span><br><span class="line">      // 设置图像平滑的质量，设置为“低”（默认）、“中等”或“高”之一。</span><br><span class="line">    &#125;</span><br><span class="line">    cropperRef.current.cropper.getCroppedCanvas(params).toBlob(blob =&gt; &#123;</span><br><span class="line">      return cropperPic(blob, updateItem)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  // 将网络图片转换成base64格式</span><br><span class="line">  const transBase64FromImage = (image) =&gt; &#123;</span><br><span class="line">    let canvas = document.createElement(&quot;canvas&quot;);</span><br><span class="line">    canvas.width = image.width;</span><br><span class="line">    canvas.height = image.height;</span><br><span class="line">    let ctx = canvas.getContext(&quot;2d&quot;);</span><br><span class="line">    ctx &amp;&amp; ctx.drawImage(image, 0, 0, image.width, image.height);</span><br><span class="line">    // 可选其他值 image/jpeg</span><br><span class="line">    return canvas.toDataURL(&quot;image/jpeg&quot;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    // 设置打开窗口显示的裁剪图片</span><br><span class="line">    if (curRow !== &apos;&apos;) &#123;</span><br><span class="line">      setImgUrl(curRow);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, [curRow])</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &lt;Modal</span><br><span class="line">        maskClosable=&#123;false&#125;</span><br><span class="line">        className=&apos;CropperEditPicModal&apos;</span><br><span class="line">        style=&#123;&#123; minHeight: &apos;50vh&apos; &#125;&#125;</span><br><span class="line">        width=&#123;&apos;50vw&apos;&#125;</span><br><span class="line">        closeIcon=&#123;&lt;img src=&#123;closePic&#125; width=&#123;29&#125; height=&#123;29&#125; /&gt;&#125;</span><br><span class="line">        title=&#123;&apos;图片剪裁&apos;&#125;</span><br><span class="line">        visible=&#123;cropperVisible&#125;</span><br><span class="line">        onOk=&#123;handleOk&#125;</span><br><span class="line">        footer=&#123;null&#125;</span><br><span class="line">        onCancel=&#123;handleCancel&#125;</span><br><span class="line">      &gt;</span><br><span class="line">        &lt;div className=&quot;s-upload-main&quot;&gt;</span><br><span class="line">          &lt;div className=&quot;top-box&quot;&gt;</span><br><span class="line">            &lt;div className=&quot;btn file-box&quot;&gt;</span><br><span class="line">              &lt;span&gt;选择文件...&lt;/span&gt;&lt;input</span><br><span class="line">                ref=&#123;inputVal&#125;</span><br><span class="line">                id=&quot;file&quot;</span><br><span class="line">                type=&quot;file&quot;</span><br><span class="line">                name=&quot;singlePhoto&quot;</span><br><span class="line">                accept=&quot;image/*&quot;</span><br><span class="line">                className=&quot;btn&quot;</span><br><span class="line">                onChange=&#123;handleChangeFile&#125;</span><br><span class="line">              /&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &#123;renderButton(moveClick, cropClick, &apos;icon-yidong&apos;, &apos;icon-caijian&apos;, &apos;icon-yidong&apos;, &apos;icon-caijian&apos;)&#125;</span><br><span class="line">            &#123;renderButton(rotateClick, rotateInvertedClick, &apos;icon-icon_rotate&apos;, &apos;icon-icon_rotate&apos;, &apos;icon-left-rotate&apos;, &apos;icon-right-rotate&apos;)&#125;</span><br><span class="line">            &#123;renderButton(transverseClick, verticalClick, &apos;icon-link-arrow-h-full&apos;, &apos;icon-link-arrow-v-full&apos;, &apos;icon-scaleX&apos;, &apos;icon-scaleY&apos;)&#125;</span><br><span class="line">            &#123;renderButton(deleteClick, resetClick, &apos;icon-quxiao&apos;, &apos;icon-icon-refresh&apos;, &apos;icon-clear&apos;, &apos;icon-reset&apos;)&#125;</span><br><span class="line">            </span><br><span class="line">            &lt;Button className=&apos;preservation&apos; onClick=&#123;btnSubmit&#125;&gt;保存&lt;/Button&gt;</span><br><span class="line">          &lt;/div&gt;</span><br><span class="line">          &lt;div className=&quot;s-upload-content&quot;&gt;</span><br><span class="line">            &lt;div className=&quot;left-box&quot;&gt;</span><br><span class="line">              &lt;Cropper</span><br><span class="line">                style=&#123;&#123;</span><br><span class="line">                  height: 400</span><br><span class="line">                &#125;&#125;</span><br><span class="line">                // cropper对象注意设置checkCrossOrigin和checkOrientation两个属性，就能跨域访问了</span><br><span class="line">                // checkOrientation=&#123;false&#125;</span><br><span class="line">                // checkCrossOrigin=&#123;false&#125;</span><br><span class="line">                src=&#123;imgUrl&#125;</span><br><span class="line">                // 元素或元素数组或节点列表对象或 Document.querySelector 的所有有效选择器</span><br><span class="line">                preview=&#123;&apos;.previewBox&apos;&#125;</span><br><span class="line">                ref=&#123;cropperRef&#125;</span><br><span class="line">                initialAspectRatio=&#123;1&#125; //定义裁剪框的初始宽高比</span><br><span class="line">                viewMode=&#123;0&#125; //裁剪框不能超过画布大小</span><br><span class="line">                guides=&#123;true&#125; //网格线</span><br><span class="line">                minCropBoxHeight=&#123;10&#125; //最小高度</span><br><span class="line">                minCropBoxWidth=&#123;10&#125;</span><br><span class="line">                background=&#123;false&#125;</span><br><span class="line">                movable=&#123;true&#125;</span><br><span class="line">                cropBoxMovable=&#123;true&#125; //裁剪框是否移动</span><br><span class="line">                cropBoxResizable=&#123;true&#125; //裁剪框大小是否变化</span><br><span class="line">                scalable=&#123;true&#125;  //是否可以放大</span><br><span class="line">                rotatable=&#123;true&#125; //是否可以旋转</span><br><span class="line">                dragMode=&#123;&apos;move&apos;&#125; //单击设置为移动图片</span><br><span class="line">                //这个比较重要，单击时，设置裁剪框不可变化</span><br><span class="line">                toggleDragModeOnDblclick=&#123;false&#125;</span><br><span class="line">                //这个也比较重要，对于有方向值的图片是否根据方向值旋转</span><br><span class="line">                checkOrientation=&#123;false&#125;</span><br><span class="line">              /&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;div className=&quot;right-box&quot;&gt;</span><br><span class="line">              &#123;/* preview=&#123;&apos;.previewBox&apos;&#125;设置右侧预览的图片，对应的是dom元素 */&#125;</span><br><span class="line">              &lt;div className=&quot;previewBox&quot;&gt;&lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">          &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">      &lt;/Modal&gt;</span><br><span class="line">    &lt;/&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">export default React.memo(CropperEditPic);</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 图片裁剪的样式文件 */</span></span><br><span class="line"><span class="selector-class">.CropperEditPicModal</span> &#123;</span><br><span class="line">  .ant-modal-body &#123;</span><br><span class="line">    <span class="selector-tag">padding</span>: 0 !<span class="selector-tag">important</span>;</span><br><span class="line">    <span class="selector-tag">padding-top</span>: 23<span class="selector-tag">px</span> !<span class="selector-tag">important</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.ant-modal-header</span> &#123;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">10px</span> <span class="number">10px</span> <span class="number">0</span> <span class="number">0</span> <span class="meta">!important</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#2a82e4</span> <span class="meta">!important</span>;</span><br><span class="line"></span><br><span class="line">    .ant-modal-title &#123;</span><br><span class="line">      <span class="selector-tag">color</span>: <span class="selector-id">#fff</span> !<span class="selector-tag">important</span>;</span><br><span class="line">      <span class="selector-tag">font-weight</span>: <span class="selector-tag">bold</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.ant-modal-content</span> &#123;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">10px</span> <span class="number">10px</span> <span class="number">0</span> <span class="number">0</span> <span class="meta">!important</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.CropperBox</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">700px</span>;</span><br><span class="line"></span><br><span class="line">    .CropperBoxHeader &#123;</span><br><span class="line">      <span class="selector-tag">background-color</span>: <span class="selector-id">#fff</span>;</span><br><span class="line">      <span class="selector-tag">height</span>: 60<span class="selector-tag">px</span>;</span><br><span class="line">      <span class="selector-tag">text-align</span>: <span class="selector-tag">center</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.CropperBoxContent</span> &#123;</span><br><span class="line">      <span class="attribute">justify-content</span>: center;</span><br><span class="line">      <span class="attribute">align-items</span>: center;</span><br><span class="line">      <span class="attribute">display</span>: flex;</span><br><span class="line">      <span class="attribute">height</span>: <span class="number">92%</span>;</span><br><span class="line">      <span class="attribute">background-color</span>: <span class="number">#e9f2fc</span>;</span><br><span class="line"></span><br><span class="line">      .xi-cropper-wrap &#123;</span><br><span class="line">        <span class="selector-tag">width</span>: 660<span class="selector-tag">px</span> !<span class="selector-tag">important</span>;</span><br><span class="line">        <span class="selector-tag">height</span>: 400<span class="selector-tag">px</span> !<span class="selector-tag">important</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-class">.xi-cropper-upload</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">660px</span> <span class="meta">!important</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">400px</span> <span class="meta">!important</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-tag">input</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">660px</span> <span class="meta">!important</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">400px</span> <span class="meta">!important</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-class">.xi-cropper-file</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">660px</span> <span class="meta">!important</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">400px</span> <span class="meta">!important</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.chooseBtn</span> &#123;</span><br><span class="line">      <span class="attribute">margin-bottom</span>: <span class="number">30px</span>;</span><br><span class="line">      <span class="attribute">background-color</span>: <span class="number">#5ebc5e</span>;</span><br><span class="line">      <span class="attribute">width</span>: <span class="number">5vw</span>;</span><br><span class="line">      <span class="attribute">height</span>: <span class="number">42px</span>;</span><br><span class="line">      <span class="attribute">font-size</span>: <span class="number">17px</span>;</span><br><span class="line">      <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#5ebc5e</span>;</span><br><span class="line">      <span class="attribute">border-radius</span>: <span class="number">6px</span>;</span><br><span class="line">      <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">      <span class="attribute">cursor</span>: pointer;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* cropper主体 */</span></span><br><span class="line">  <span class="selector-class">.s-upload-main</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line"></span><br><span class="line">    .top-box &#123;</span><br><span class="line">      <span class="selector-tag">overflow</span>: <span class="selector-tag">hidden</span>;</span><br><span class="line">      <span class="selector-tag">margin-bottom</span>: 18<span class="selector-tag">px</span>;</span><br><span class="line">      <span class="selector-tag">display</span>: <span class="selector-tag">flex</span>;</span><br><span class="line">      <span class="selector-tag">justify-content</span>: <span class="selector-tag">center</span>;</span><br><span class="line">      <span class="selector-tag">align-items</span>: <span class="selector-tag">center</span>;</span><br><span class="line"></span><br><span class="line">      <span class="selector-class">.file-box</span> &#123;</span><br><span class="line">        <span class="attribute">position</span>: relative;</span><br><span class="line">        <span class="attribute">overflow</span>: hidden;</span><br><span class="line">        <span class="attribute">background</span>: <span class="number">#eca054</span>;</span><br><span class="line">        <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line"></span><br><span class="line">        span &#123;</span><br><span class="line">          <span class="selector-tag">color</span>: <span class="selector-id">#fff</span>;</span><br><span class="line">          <span class="selector-tag">padding</span>: 0 10<span class="selector-tag">px</span>;</span><br><span class="line">          <span class="selector-tag">display</span>: <span class="selector-tag">block</span>;</span><br><span class="line">          <span class="selector-tag">height</span>: 40<span class="selector-tag">px</span>;</span><br><span class="line">          <span class="selector-tag">line-height</span>: 40<span class="selector-tag">px</span>;</span><br><span class="line">          <span class="selector-tag">font-size</span>: 18<span class="selector-tag">px</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="selector-class">.btn</span> &#123;</span><br><span class="line">          <span class="attribute">position</span>: absolute;</span><br><span class="line">          <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">          <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">          <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">          <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">          <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">          <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">          <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-class">.buttonGroup</span> &#123;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">10px</span>;</span><br><span class="line">        <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">        <span class="attribute">overflow</span>: hidden;</span><br><span class="line">        <span class="attribute">display</span>: flex;</span><br><span class="line">        .ant-btn&#123;</span><br><span class="line">          <span class="selector-tag">border-radius</span>: 0;</span><br><span class="line">          <span class="selector-tag">border</span>: <span class="selector-tag">none</span> !<span class="selector-tag">important</span>;</span><br><span class="line">          <span class="selector-tag">height</span>: 40<span class="selector-tag">px</span>;</span><br><span class="line">          <span class="selector-tag">padding</span>: 0 15<span class="selector-tag">px</span>;</span><br><span class="line">          <span class="selector-tag">background</span>: <span class="selector-id">#2a82e4</span>;</span><br><span class="line">          <span class="selector-tag">display</span>: <span class="selector-tag">flex</span>;</span><br><span class="line">          <span class="selector-tag">align-items</span>: <span class="selector-tag">center</span>;</span><br><span class="line">          &amp;<span class="selector-class">.rotation_inverted</span>&#123;</span><br><span class="line">            svg&#123;</span><br><span class="line">              <span class="selector-tag">transform</span>: <span class="selector-tag">scaleX</span>(<span class="selector-tag">-1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          &amp;<span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">            <span class="attribute">background</span>: <span class="number">#2a82e4</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="selector-tag">span</span>&#123;</span><br><span class="line">            <span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">            <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-class">.preservation</span> &#123;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">40px</span>;</span><br><span class="line">        <span class="attribute">line-height</span>: <span class="number">40px</span>;</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">10px</span>;</span><br><span class="line">        <span class="attribute">width</span>: auto;</span><br><span class="line">        <span class="attribute">border</span>: none;</span><br><span class="line">        <span class="attribute">background</span>: <span class="number">#28A745</span>;</span><br><span class="line">        <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">10px</span>;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.s-upload-content</span> &#123;</span><br><span class="line">      <span class="attribute">height</span>: <span class="number">500px</span>;</span><br><span class="line">      <span class="attribute">display</span>: flex;</span><br><span class="line">      <span class="attribute">justify-content</span>: space-between;</span><br><span class="line">      <span class="attribute">overflow</span>: hidden;</span><br><span class="line">      <span class="attribute">background</span>: <span class="built_in">rgba</span>(233, 242, 252, 1);</span><br><span class="line">      <span class="attribute">padding</span>: <span class="number">30px</span>;</span><br><span class="line"></span><br><span class="line">      .left-box &#123;</span><br><span class="line">        <span class="selector-tag">float</span>: <span class="selector-tag">left</span>;</span><br><span class="line">        <span class="selector-tag">width</span>: 66%;</span><br><span class="line">        <span class="selector-tag">height</span>: 520<span class="selector-tag">px</span>;</span><br><span class="line"></span><br><span class="line">        <span class="selector-class">.image</span> &#123;</span><br><span class="line">          <span class="attribute">display</span>: block;</span><br><span class="line">          <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">          <span class="attribute">max-width</span>: <span class="number">100%</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="selector-class">.right-box</span> &#123;</span><br><span class="line">        <span class="attribute">float</span>: right;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">        <span class="attribute">background</span>: <span class="number">#ececec</span>;</span><br><span class="line"></span><br><span class="line">        .previewBox &#123;</span><br><span class="line">          <span class="selector-tag">width</span>: 250<span class="selector-tag">px</span>;</span><br><span class="line">          <span class="selector-tag">height</span>: 250<span class="selector-tag">px</span>;</span><br><span class="line">          <span class="selector-tag">overflow</span>: <span class="selector-tag">hidden</span>;</span><br><span class="line">          <span class="comment">/* 这个属性可以得到想要的效果 */</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-pseudo">:gabel</span> &#123;</span><br><span class="line">    .xi-cropper-modal &#123;</span><br><span class="line">      <span class="selector-tag">position</span>: <span class="selector-tag">relative</span>;</span><br><span class="line"></span><br><span class="line">      <span class="selector-class">.xi-cropper-modalMask</span> &#123;</span><br><span class="line">        <span class="attribute">display</span>: none;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.xi-cropper-modal</span> <span class="selector-class">.cropper-modal-content</span> &#123;</span><br><span class="line">    // top: 360px !important;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.xi-cropper-modal</span> <span class="selector-class">.cropper-modal-content</span> <span class="selector-class">.cropper-modal-header</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">16px</span> <span class="meta">!important</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个插件的几个重要属性：&lt;Cropper<br>                src={imgUrl}<br>               // 元素或元素数组或节点列表对象或 Document.querySelector 的所有有效选择器<br>                preview={‘.previewBox’} /&gt;</p>
+<p>   这个【src是展示的图片地址】，如果是跨域访问的图片地址，他是展示不出来的，就算设置了跨域访问，保存也是保存不了的，他会提示有污染的画布。注意这点！！！！</p>
+<p>这个【preview是预览的dom元素】</p>
+<p>详细的属性介绍可以参考插件的网址。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"> const blobToFile = (blob, fileName) =&gt; &#123;</span><br><span class="line">    return new window.File([blob], fileName, &#123;</span><br><span class="line">      type: blob.type</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">// 父组件裁剪图片的方法</span><br><span class="line">  const cropperPic = (blob, updateItem) =&gt; &#123;</span><br><span class="line">    const formData = new FormData();</span><br><span class="line">    // Pass the image file name as the third parameter if necessary.</span><br><span class="line">    const newfile = blobToFile(blob, &apos;pic.png&apos;)</span><br><span class="line">    // 要把blob转成file对象，同时要给文件的后缀名，接口要求！！</span><br><span class="line">    //向 FormData 中添加新的属性值，FormData 对应的属性值存在也不会覆盖原值，而是新增一个值，如果属性不存在则新增一项属性值。</span><br><span class="line">    formData.append(&apos;file&apos;, newfile);</span><br><span class="line"></span><br><span class="line">    uploadImage(formData).then(res =&gt; &#123;</span><br><span class="line">      if (res.code === 200) &#123;</span><br><span class="line">        const updateParams = &#123;</span><br><span class="line">          ...updateItem,</span><br><span class="line">          fmLink: res.data.fmLink,</span><br><span class="line">          fsLink: res.data.fsLink,</span><br><span class="line">          f_Link: res.data.f_Link,</span><br><span class="line">        &#125;</span><br><span class="line">        editDocById([updateParams]).then((res) =&gt; &#123;</span><br><span class="line">          if (res.code !== 200) return message.error(&apos;上传图片失败&apos;);</span><br><span class="line">          message.success(&apos;上传图片成功&apos;);</span><br><span class="line">          setCropperVisible(false);</span><br><span class="line">          handleSearch();</span><br><span class="line">        &#125;).catch(err =&gt; &#123;</span><br><span class="line">          return message.error(&apos;上传图片失败&apos;);</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        return message.erlibraryListror(res.message || &apos;上传图片失败&apos;, 10);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;).catch(err =&gt; &#123;</span><br><span class="line">      return message.error(&apos;上传图片失败&apos;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  .....</span><br><span class="line">return (</span><br><span class="line">   &#123;</span><br><span class="line">        cropperVisible &amp;&amp;</span><br><span class="line">        &lt;CropperEditPic</span><br><span class="line">          cropperPic=&#123;cropperPic&#125;</span><br><span class="line">          setCropperVisible=&#123;setCropperVisible&#125;</span><br><span class="line">          cropperVisible=&#123;cropperVisible&#125;</span><br><span class="line">          curRow=&#123;cropperCurRowUrl&#125;</span><br><span class="line">          updateItem=&#123;cropperItem&#125;</span><br><span class="line">        /&gt;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<p>参考资料：</p>
+<p><a href="https://fengyuanchen.github.io/cropperjs/" target="_blank" rel="noopener">https://fengyuanchen.github.io/cropperjs/</a><br><a href="https://github.com/fengyuanchen/cropperjs/blob/main/README.md" target="_blank" rel="noopener">https://github.com/fengyuanchen/cropperjs/blob/main/README.md</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById(&quot;QR&quot;); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="彭摆鱼 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="彭摆鱼 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"><i class="fa fa-diamond"></i> 前端</a>
+          
+            <a href="/tags/react/" rel="tag"><i class="fa fa-diamond"></i> react</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/06/01/antd的表单动态增加/" rel="next" title="antd的表单动态增加">
+                <i class="fa fa-chevron-left"></i> antd的表单动态增加
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/06/05/antd的批量导出/" rel="prev" title="antd的下拉框批量导出">
+                antd的下拉框批量导出 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg" alt="彭摆鱼">
+            
+              <p class="site-author-name" itemprop="name">彭摆鱼</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/asteryxxx" title="GitHub &rarr; https://github.com/asteryxxx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/437767931@qq.com" title="E-Mail &rarr; 437767931@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/yourname" title="Weibo &rarr; https://weibo.com/yourname"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://pyy.com" title="http://pyy.com" rel="noopener" target="_blank">pengyuyan</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彭摆鱼</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/three/three.min.js"></script>
+
+  
+  <script src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/love.js"></script>
+
+
+
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="总结一下es6常用的语法1、（解构）只要等号两边模式一致，左边变量即可获取右边对应位置的值12345678910111213141516171819let [ , , c] = [1, 2, 3]; console.log(c); // 3 let [a1, , c1] = [1, 2, 3]; console.log(a1,c1); // 1, 3 let [a2, ...b2] = [1, 2">
+<meta name="keywords" content="es6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6总结常用">
+<meta property="og:url" content="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2020/09/10/es6(1)/index.html">
+<meta property="og:site_name" content="Asteryxx">
+<meta property="og:description" content="总结一下es6常用的语法1、（解构）只要等号两边模式一致，左边变量即可获取右边对应位置的值12345678910111213141516171819let [ , , c] = [1, 2, 3]; console.log(c); // 3 let [a1, , c1] = [1, 2, 3]; console.log(a1,c1); // 1, 3 let [a2, ...b2] = [1, 2">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://weibo.com/images/asyn2.jpg">
+<meta property="og:updated_time" content="2020-10-06T15:55:31.093Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6总结常用">
+<meta name="twitter:description" content="总结一下es6常用的语法1、（解构）只要等号两边模式一致，左边变量即可获取右边对应位置的值12345678910111213141516171819let [ , , c] = [1, 2, 3]; console.log(c); // 3 let [a1, , c1] = [1, 2, 3]; console.log(a1,c1); // 1, 3 let [a2, ...b2] = [1, 2">
+<meta name="twitter:image" content="https://weibo.com/images/asyn2.jpg">
+
+
+
+
+
+
+  <link rel="canonical" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2020/09/10/es6(1)/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>es6总结常用 | Asteryxx</title>
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/asteryxxx/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Asteryxx</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2020/09/10/es6(1)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="彭摆鱼">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Asteryxx">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">es6总结常用
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-09-10 15:08:28" itemprop="dateCreated datePublished" datetime="2020-09-10T15:08:28+08:00">2020-09-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-10-06 23:55:31" itemprop="dateModified" datetime="2020-10-06T23:55:31+08:00">2020-10-06</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="总结一下es6常用的语法"><a href="#总结一下es6常用的语法" class="headerlink" title="总结一下es6常用的语法"></a>总结一下es6常用的语法</h2><p><font size="4" color="Gray"><strong>1、（解构）只要等号两边模式一致，左边变量即可获取右边对应位置的值</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">let [ , , c] = [1, 2, 3];</span><br><span class="line"> console.log(c); // 3</span><br><span class="line"></span><br><span class="line"> let [a1, , c1] = [1, 2, 3];</span><br><span class="line"> console.log(a1,c1); // 1, 3</span><br><span class="line"></span><br><span class="line"> let [a2, ...b2] = [1, 2, 3];</span><br><span class="line"> console.log(a2,b2); // 1, [2,3]</span><br><span class="line"></span><br><span class="line"> let [a, b, ..c.] = [1];</span><br><span class="line"> console.log(a, b, c); // 1, undefined, [] </span><br><span class="line"> 【如果解构不成功，变量的值就等于undefined。】</span><br><span class="line"></span><br><span class="line"> let [a] = []; // a =&gt; undefined</span><br><span class="line"> let [a, b] = [1]; // a =&gt; 1 , b =&gt; </span><br><span class="line"> </span><br><span class="line">【 注意：两边模式不同时，会报错：】</span><br><span class="line"> 例子：let [a] =1 ;let [a] =false;</span><br><span class="line"> let [a] =NaN ; let [a] = null; let [a] = &#123;&#125;;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li><font size="3" color="Gray"><strong> 1.2、数组指定解构的默认值，左边声明默认值，如果右边没赋值就取默认：</strong></font> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let [a = 1] = []; // a =&gt; 1</span><br><span class="line">let [a, b = 2] = [a]; // a =&gt; 1 , b =&gt; 2</span><br><span class="line"></span><br><span class="line">【注意：有两个特殊情况：</span><br><span class="line">**【1、右边模式对应的值，必须严格等于undefined，</span><br><span class="line">默认值才能生效；2、而null不严格等于undefined 】</span><br><span class="line"></span><br><span class="line">let [a = 1] = [undefined]; // a =&gt; 1</span><br><span class="line">let [a = 1] = [null]; // a =&gt; null</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p><font size="4" color="Gray"><strong> 2、对象的解构赋值：只要按照变量名去取对应属性名的值，</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">      let &#123;a, b&#125; = &#123;a:1, b:2&#125;; // a =&gt; 1 , b =&gt; 2</span><br><span class="line">      let &#123;a&#125; = &#123;a:3, b:2, c:1&#125;;// a =&gt; 3</span><br><span class="line">      let &#123;a&#125; = &#123;b:2, c:1&#125;; // a =&gt; undefined</span><br><span class="line"></span><br><span class="line">【注意：如果我们想赋值给新的变量：</span><br><span class="line">        let &#123;a:b&#125; = &#123;a:1, c:2&#125;;</span><br><span class="line">        console.log(&#123;b&#125;);</span><br><span class="line">       //&#123;b: 1&#125; 先找到a的属性名，然后赋值，再赋值给b】</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li><font size="3" color="Gray"><strong> 2.1:对象指定解构的默认值：</strong></font> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> let &#123;a=1&#125; = &#123;&#125;; // a =&gt; 1</span><br><span class="line">let &#123;a, b=1&#125; = &#123;a:2&#125;; // a =&gt; 2, b =&gt; 1</span><br><span class="line"></span><br><span class="line">let &#123;a:b=3&#125; = &#123;&#125;; // b =&gt; 3</span><br><span class="line">let &#123;a:b=3&#125; = &#123;a:4&#125;; // b = &gt;4</span><br><span class="line">// 【a是匹配模式，b是变量】</span><br><span class="line"></span><br><span class="line">let &#123;a=1&#125; = &#123;a:undefined&#125;; // a =&gt; 1</span><br><span class="line">let &#123;a=1&#125; = &#123;a:null&#125;; // a =&gt; null</span><br><span class="line">// 因为null与undefined不严格相等，所以赋值有效</span><br><span class="line"></span><br><span class="line">let obj = &#123;</span><br><span class="line">     a:[ 1, &#123; b: 2&#125;]</span><br><span class="line">&#125;;</span><br><span class="line">let &#123;a, a: [c, &#123;b&#125;]&#125; = obj;</span><br><span class="line">//对象的数组只有c和1对应的上，然后</span><br><span class="line">// a=&gt;[1, &#123;b: 2&#125;], b =&gt; 2, c =&gt; 1</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p><font size="4" color="Gray"><strong> 3、字符串的解构赋值中，有个Key为length可以得到转换成数组的长度</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let &#123;length:len&#125; = &apos;hello&apos;;// len =&gt; 5</span><br><span class="line">      console.log(len);</span><br><span class="line">      let &#123;length:len1&#125; = [1,2,3,4,5,6,7,7];</span><br><span class="line">      console.log(len1);//8</span><br></pre></td></tr></table></figure></p>
+<p><font size="4" color="Gray"><strong>  4、数值和布尔值的解构赋值</strong></font><br>【只要等号右边的值不是对象或数组，就先将其转为对象】<br>【undefined和null无法转为对象，所以对它们进行解构赋值，都会报错】<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">let &#123;length:len&#125; = &apos;hello&apos;;// len =&gt; 5</span><br><span class="line">  console.log(len);</span><br><span class="line">  let &#123;length:len1&#125; = [1,2,3,4,5,6,7,7];</span><br><span class="line">  console.log(len1);//8</span><br><span class="line"></span><br><span class="line">   let &#123;toString: s&#125; = 123;</span><br><span class="line">   //包装对象有toString属性</span><br><span class="line">   console.log(s === Number.prototype.toString)//true</span><br><span class="line">    </span><br><span class="line">  【undefined和null无法转为对象，所以对它们进行解构赋值】</span><br><span class="line">   let &#123; prop: x &#125; = undefined; // TypeError</span><br></pre></td></tr></table></figure></p>
+<p><font size="4" color="Gray"><strong> 5、函数参数的解构赋值</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function fun ([a, b])&#123;</span><br><span class="line">         return a + b;</span><br><span class="line">     &#125;</span><br><span class="line"> fun ([2, 3]); // 5</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li><font size="3" color="Gray"><strong>5.1：默认值的解构:</strong></font> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function fun (&#123;a=0, b=0&#125; = &#123;&#125;)&#123;</span><br><span class="line">         //参数右边= &#123;&#125; 等价于这两句：</span><br><span class="line">         //【 let aa = &#123;&#125;;   fun(aa)】</span><br><span class="line">          return [a, b];</span><br><span class="line">    &#125;</span><br><span class="line">      fun (&#123;a:1, b:2&#125;);// [1, 2]</span><br><span class="line">      fun (&#123;a:1&#125;); // [1, 0]</span><br><span class="line">      fun (&#123;&#125;); // [0, 0]</span><br><span class="line">      fun (); // [0, 0]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p><font size="4" color="Gray"><strong> 6、【应用1：函数返回多个值】</strong>：</font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">  // 【返回一个数组】</span><br><span class="line">  function f ()&#123;</span><br><span class="line">      return [1, 2, 3];</span><br><span class="line">  &#125;</span><br><span class="line">  let [a, b, c] = f(); // a=&gt;1, b=&gt;2, c=&gt;3</span><br><span class="line"></span><br><span class="line">  //【 返回一个对象】常用</span><br><span class="line">  function f ()&#123;</span><br><span class="line">    return &#123;a:1, b:2&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  let &#123;a, b&#125; = f(); // a=&gt;1, b=&gt;2</span><br><span class="line"></span><br><span class="line">  //【快速的将一组参数与变量名对应】常用</span><br><span class="line">    function f([a, b, c]) &#123;</span><br><span class="line">        console.log(&apos;&apos;+a+&quot;,&quot;+b);</span><br><span class="line">    &#125;</span><br><span class="line">    f([1, 2, 3]);//1,2</span><br><span class="line">    function f2(&#123;age=990,name&#125;) &#123;</span><br><span class="line">        console.log(&apos;&apos;+age+&quot;,&quot;+name);</span><br><span class="line">    &#125;</span><br><span class="line">    f2(&#123;age:18,name:&apos;lixun&apos;&#125;);//18,lixun</span><br><span class="line">    f2(&#123;name:&apos;lixun&apos;&#125;);//990,lixun 没传age就用默认的990</span><br><span class="line"></span><br><span class="line">  //【提取JSON数据：】</span><br><span class="line">    let json1 = &#123;</span><br><span class="line">       name : &apos;lixun&apos;,</span><br><span class="line">       age: 19</span><br><span class="line">    &#125;</span><br><span class="line">    let &#123;name, age&#125; = json1; // lixun,19</span><br><span class="line"> </span><br><span class="line">  //【遍历Map结构】</span><br><span class="line">    const m = new Map();</span><br><span class="line">    m.set(&apos;aa&apos;,1);</span><br><span class="line">    m.set(&apos;bb&apos;,2);</span><br><span class="line">    for (let [k, v] of m)&#123;</span><br><span class="line">        console.log(k + &apos; : &apos; + v);</span><br><span class="line">    &#125;</span><br><span class="line">    // 【获取键的名称】</span><br><span class="line">    for (let [k] of m)&#123;</span><br><span class="line">        console.log(k);</span><br><span class="line">    &#125;</span><br><span class="line">    // 获取值的名称：for (let [,k] of m)</span><br><span class="line"></span><br><span class="line">//【导入模块的指定方法】常用】</span><br><span class="line">    const &#123;add&#125; = require(&apos;Math&apos;);</span><br></pre></td></tr></table></figure></p>
+<p> <font size="4" color="Gray"><strong> 7、字符串的拓展 </strong></font><br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">let a = &apos;hello lx&apos;;</span><br><span class="line">a.startsWith(&apos;lx&apos;); // false 【是否找到参数字符串】</span><br><span class="line">a.endsWith(&apos;x&apos;); // true</span><br><span class="line">a.includes(&apos;lx&apos;); // true</span><br><span class="line">	</span><br><span class="line">【这三个方法都支持第二个参数，表示起始搜索的位置】。</span><br><span class="line">  let a = &apos;hellolxhahahah&apos;;</span><br><span class="line">  console.log(a.includes(&apos;lx&apos;,8)); // false</span><br><span class="line">	</span><br><span class="line">【repeat方法返回一个新字符串，表示将原字符串重复n次】</span><br><span class="line"> &apos;abc&apos;.repeat(3); // &apos;abcabcabc&apos;</span><br></pre></td></tr></table></figure></p>
+<p><font size="4" color="Gray"><strong>8、模版字符串</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let v1 = &apos;zhh&apos;;</span><br><span class="line"> // 【拼接变量】</span><br><span class="line"> let a = `abc$&#123;v1&#125;def`</span><br></pre></td></tr></table></figure></font></p>
+<p><font size="4" color="Gray"><strong>9、正则的拓展【第一个参数：字符串，第二个参数：正则的修饰符</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">let a = new RegExp(&apos;aaa&apos;, &apos;i&apos;);</span><br><span class="line">// 等价于</span><br><span class="line">let a = /aaa/i;</span><br><span class="line"></span><br><span class="line">【只能有一个参数：正则表达式】</span><br><span class="line">let a = new RegExp(/abc/i);</span><br><span class="line">//等价于</span><br><span class="line">let a = /abx/i;</span><br></pre></td></tr></table></figure></p>
+<p><font size="4" color="Gray"><strong>10、数值：Number.parseInt(), Number.parseFloat()方法</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">   parseInt(&apos;123.34&apos;); // 123</span><br><span class="line">   parseFloat(&apos;123.456#&apos;); // 123.456</span><br><span class="line"></span><br><span class="line">   Number.parseInt(&apos;12.345&apos;); // 12</span><br><span class="line">   Number.parseFloat(&apos;123.456##&apos;); // 123.456</span><br><span class="line">  </span><br><span class="line">  【用来判断一个数值是否是整数： Number.isInteger】</span><br><span class="line">    Number.isInteger(10); // true</span><br><span class="line">    Number.isInteger(10.0); // true</span><br><span class="line"></span><br><span class="line">  【Math.trunc:去除小数的小数部分，返回整数。</span><br><span class="line">   1、 若为非数值，先转为数值。</span><br><span class="line">   2、 为空值或无法截取整数的值，返回NaN】</span><br><span class="line">      console.log(Math.trunc(1.1)); //1</span><br><span class="line">      console.log(Math.trunc(true)); //1</span><br><span class="line">      console.log(Math.trunc(NaN)); //NaN</span><br><span class="line"></span><br><span class="line">  【Math.sign():判断一个数是正数、负数还是零；非数值，</span><br><span class="line">会先转成数值 正数返回+1，负数返回-1，为0返回0，其他返回NaN】</span><br><span class="line">      Math.sign(-1); // -1</span><br><span class="line">      Math.sign(1); // +1</span><br><span class="line">      Math.sign(0); // 0</span><br><span class="line">      Math.sign(NaN); // NaN</span><br><span class="line">      Math.sign(true); // +1</span><br><span class="line">      Math.sign(false);// 0</span><br></pre></td></tr></table></figure></p>
+<p><font size="4" color="Gray"><strong> 11、函数拓展，默认值</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">【参数变量是默认声明的，不能用let和const再次声明：</span><br><span class="line">     function f(a1, b1=&apos;lx&apos;)&#123;</span><br><span class="line">         console.log(a1, b1);</span><br><span class="line">     &#125;</span><br><span class="line">     f(&apos;hii&apos;)//hii lx</span><br><span class="line">     f(&apos;hii&apos;,&apos;zhh&apos;)//hii zhh</span><br><span class="line"></span><br><span class="line">  与解构赋值默认值结合使用：</span><br><span class="line">     function f (&#123;a, b=1&#125;)&#123;</span><br><span class="line">          console.log(a,b)</span><br><span class="line">     &#125;;</span><br><span class="line">     f(&#123;&#125;); // undefined 1</span><br><span class="line">     f(&#123;a:2&#125;); // 2 1</span><br><span class="line">     f(&#123;a:2, b:3&#125;); // 2 3</span><br><span class="line">     f(); // 报错</span><br><span class="line">     </span><br><span class="line">   【rest参数只能放在最后一个】</span><br><span class="line">  function f2 (a,...b)&#123;</span><br><span class="line">       console.log(f2.length);//1</span><br><span class="line">  &#125;;//函数的length属性不包含rest参数</span><br><span class="line">  f2(1,[2,3,4]); // 1</span><br><span class="line"></span><br><span class="line">  function f22 (a,b,c)&#123;</span><br><span class="line">       console.log(f22.length);//3</span><br><span class="line">   &#125;;</span><br><span class="line">   f22(234,4,5)</span><br></pre></td></tr></table></figure></p>
+<p><font size="4" color="Gray"><strong> 12、【扩展运算符】重要!</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">例子1 ： let a = [1, 2, 3, 4, 5]</span><br><span class="line">   console.log(a);    //[ 1, 2, 3, 4, 5 ]</span><br><span class="line">   console.log(...a);    // 1, 2, 3, 4, 5 </span><br><span class="line"> </span><br><span class="line">例子2 ： let a = [1, 2, 3]</span><br><span class="line">   let b = [1, 4]</span><br><span class="line">   let c = [...a, ...b]</span><br><span class="line">   console.log(c);    // [1,2,3,1,4]</span><br><span class="line"> </span><br><span class="line">例子3 ：let obj1 = &#123;</span><br><span class="line">           &quot;name&quot;: &quot;lx&quot;,</span><br><span class="line">           &quot;age&quot;: 18,</span><br><span class="line">           &quot;sex&quot;: &quot;nan&quot;</span><br><span class="line">       &#125;</span><br><span class="line">       let obj2 = &#123;</span><br><span class="line">           &quot;name&quot;: &quot;zhh&quot;,</span><br><span class="line">           &quot;age&quot;: 28</span><br><span class="line">       &#125;</span><br><span class="line">       let obj3 = &#123;</span><br><span class="line">           ...obj1,</span><br><span class="line">           ...obj2</span><br><span class="line">       &#125;</span><br><span class="line">       console.log(obj3);</span><br><span class="line">       //如果有相同属性Key，后面的会把前面的覆盖掉</span><br><span class="line">       //&#123;name: &quot;zhh&quot;, age: 28, sex: &quot;nan&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li>【扩展运算符应用1：数组扩展为对象】<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">   let a = [11, 22, 33]</span><br><span class="line">    let b = [2, 44,55,66]</span><br><span class="line">    let c = &#123;</span><br><span class="line">        ...a,</span><br><span class="line">        ...b</span><br><span class="line">    &#125;</span><br><span class="line">console.log(c);//&#123;0: 2, 1: 44, 2: 55, 3: 66&#125;</span><br><span class="line">//以a和b长的那个数组为新的数组长度，然后后面的...b会覆盖相同</span><br><span class="line">//索引上的...a上。这里2会覆盖11，44覆盖22，以此类推..</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>【扩展运算符应用2：添加属性、在克隆的同时添加额外的属性】重要▲<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const user = &#123;id:02,name:&apos;lxx&apos;&#125;;</span><br><span class="line">const userNew = &#123;...user,sex:&apos;woman&apos;&#125;</span><br><span class="line">console.log(userNew);</span><br><span class="line">//&#123;id: 2, name: &quot;lxx&quot;, sex: &quot;woman&quot;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>【扩展运算符应用3：合并两个对象为一个新的对象】<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  const part1 = &#123; id: 11, name: &apos;pengyuyan&apos; &#125;</span><br><span class="line">  const part2 = &#123; id: 12, password: &apos;wuyanzu&apos; &#125;</span><br><span class="line">  const user1 = &#123; ...part1, ...part2 &#125;</span><br><span class="line">  console.log(user1);</span><br><span class="line">// &#123; id: 12, name: &quot;pengyuyan&quot;, password: &quot;wuyanzu&quot; &#125;  </span><br><span class="line">  也可以用这种写法：</span><br><span class="line">  const user = &#123; ...p1, ...&#123; id: 12, password: &apos;wuyanzu&apos; &#125; &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>【扩展运算符应用4：利用…删除对象的属性】<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">            let student = &#123;</span><br><span class="line">                     age: 18,</span><br><span class="line">                     name: &apos;kysue&apos;,</span><br><span class="line">                     sex: &quot;男&quot;</span><br><span class="line">                 &#125;</span><br><span class="line">               const noAge = (&#123; age, ...params &#125;) =&gt;rest;</span><br><span class="line">              let re1 = noAge(student);</span><br><span class="line">【//你可以看成&#123;age,...rest&#125;=&#123;age:18,name:&apos;kysue&apos;,sex:&apos;男&apos;&#125;】</span><br><span class="line">【//因为age对应到了，所以剩下的拓展rest就是除了age以外的所有属性。】</span><br><span class="line">              console.log(params);//过滤掉了age的属性</span><br><span class="line">           </span><br><span class="line">          【let getFullName = (&#123;first, last&#125;) =&gt; first + &apos; &apos; + last</span><br><span class="line"></span><br><span class="line">             function getFullName(str) &#123;</span><br><span class="line">                 let &#123;first, last&#125; = str;</span><br><span class="line">                 return first + &apos; &apos; + last;</span><br><span class="line">             &#125; 】 这个例子很重要！！常用</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>【扩展运算符应用5：属性排序】<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">  const user3 = &#123;</span><br><span class="line">        password: &apos;Password&apos;,</span><br><span class="line">        name: &apos;lx&apos;,</span><br><span class="line">        id: 33</span><br><span class="line">    &#125;</span><br><span class="line">    //可以将属性放到顶部或者底部</span><br><span class="line">    //先添加 key: undefined 到新对象，从而将 key 移到最前面</span><br><span class="line">    const organize = object =&gt; (&#123; id: undefined, ...object &#125;);</span><br><span class="line">//object是参数，后面是return (&#123; id: undefined, ...object &#125;)。他简便写法</span><br><span class="line">    let rs1 = organize(user3);</span><br><span class="line">    console.log(rs1);</span><br><span class="line"></span><br><span class="line">   //【如果想把解构出来的password属性放最后可以这样：</span><br><span class="line">    const org = (&#123; password, ...obj &#125;) =&gt;(&#123; ...obj, password &#125;)</span><br><span class="line">    //【想让默认值放到首位也可以这样写】</span><br><span class="line">  const setDefa = (&#123; ...obj&#125;) =&gt; (&#123; shuzu: [], ...obj &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>【扩展运算符应用6：重命名属性】<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const rename = (&#123; ID, ...obj &#125;) =&gt; (&#123; iid: ID, ...obj &#125;)</span><br><span class="line">     const user = &#123;</span><br><span class="line">         ID: 500,</span><br><span class="line">         name: &quot;lxx&quot;</span><br><span class="line">     &#125;</span><br><span class="line">     //返回重命名属性的时候，左边iid是新的属性名，右边ID是值</span><br><span class="line">     console.log(rename(user)) //&#123;iid: 500, name: &quot;lxx&quot;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>【扩展运算符应用7：替代apply方法】 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">           // ES6之前</span><br><span class="line">                    function f(a, b, c) &#123;</span><br><span class="line">                        console.log(&#123;a,b,c&#125;);</span><br><span class="line">                    &#125;;</span><br><span class="line">                    var a = [1, 2, 3];</span><br><span class="line">                    f.apply(null, a);</span><br><span class="line">            // ES6之后</span><br><span class="line">                    f(...aaa);</span><br><span class="line"></span><br><span class="line">// ES6之前:由于 JavaScript 数组没有 max() 方法，因此您可以应用 Math.max() 方法</span><br><span class="line">//第一个参数（null）无关紧要,传什么都可以，最终返回都是6</span><br><span class="line">                    Math.max.apply(null, [3, 2, 6]);</span><br><span class="line">            // ES6之后</span><br><span class="line">                    Math.max(...[3, 2, 6]);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>【扩展运算符应用8：实现深拷贝, 拓展运算符 深拷贝】<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let a1 = [1,2]</span><br><span class="line"> let a2 =[...a1];</span><br><span class="line"> a2[0] = 520;</span><br><span class="line"> console.log(a1,a2);</span><br><span class="line"> // [1, 2]    [520, 2]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p><font size="4" color="Gray"><strong>13、 Array.from()方法：将类数组对象和可遍历的对象转成真正的数组</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  let a = &#123;</span><br><span class="line">          &apos;0&apos;: &apos;a&apos;,</span><br><span class="line">          &apos;1&apos;: &apos;b&apos;,</span><br><span class="line">          length: 2</span><br><span class="line">      &#125;</span><br><span class="line">  let arr = Array.from(a);</span><br><span class="line"></span><br><span class="line">【Array.of():将一组数值，转换成数组】</span><br><span class="line">      let res = Array.of(1,2,3)</span><br><span class="line">      console.log(res);</span><br></pre></td></tr></table></figure></p>
+<p><font size="4" color="Gray"><strong>14、 find()和findIndex()   </strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">find():用于找出【第一个符合】条件的数组成员,没有一个符合则返回undefined</span><br><span class="line"></span><br><span class="line">       let res =  [1, 2, 3, 4, 5].find((value, index, arr) =&gt; &#123;</span><br><span class="line">           //当前值、当前位置和原数组</span><br><span class="line">               return value &gt; 4</span><br><span class="line">           &#125;);</span><br><span class="line">   findIndex():返回找到的元素的索引值。</span><br></pre></td></tr></table></figure></p>
+<p><font size="4" color="Gray"><strong>15、entries(),keys(),values()</strong><br>          entries()对键值对遍历，keys()对键名遍历，values()对键值遍历。</font></p>
+<pre><code>for (let i of [&apos;a&apos;, &apos;b&apos;].keys()) {
+        console.log(i)// 0 1
+    }
+</code></pre><p><font size="4" color="Gray"><strong>16、对象的简洁表示：</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">let b =&#123;a&#125; 等价于 let b = &#123;a:a&#125;</span><br><span class="line"></span><br><span class="line">function f (a,b)&#123;</span><br><span class="line">    return &#123;a,b&#125;</span><br><span class="line">&#125;  </span><br><span class="line">等价于：</span><br><span class="line">function f (a, b)&#123;</span><br><span class="line">   return &#123;a:a ,b:b&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let a =&#123;</span><br><span class="line">    fun()&#123;</span><br><span class="line">        alert(&apos;hi&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">等价于：</span><br><span class="line">let a =&#123;</span><br><span class="line">    fun:function()&#123;</span><br><span class="line">        alert(&apos;hi&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><font size="4" color="Gray"><strong>17、Object.assign()用于对象的合并，将原对象的所有可枚举属性复制到目标对象。</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">【 用法1：第一个参数:目标对象，第二个参数，源对象。】</span><br><span class="line">  let a = &#123;aa:1&#125;;</span><br><span class="line">  let b = &#123;bb:2&#125;;</span><br><span class="line">  Object.assign(a,b); //&#123;aa: 1, bb: 2&#125;</span><br><span class="line"> </span><br><span class="line">    let a = &#123; a: 1, b: 2 &#125;;</span><br><span class="line">    let b = &#123; b: 3, c: 4 &#125;;</span><br><span class="line">    console.log( Object.assign(a, b));</span><br><span class="line">    //&#123;a: 1, b: 3, c: 4&#125; 如果有同名，后面的会覆盖前面的</span><br><span class="line">  </span><br><span class="line"> 【 用法2：复制一个对象】</span><br><span class="line">   const obj = &#123; a: 1 &#125;;</span><br><span class="line">    const copy = Object.assign(&#123;&#125;, obj);</span><br><span class="line">    console.log(copy); // &#123; a: 1 &#125;</span><br></pre></td></tr></table></figure></p>
+<p><font size="4" color="Gray"><strong>18、【Set数据结构类似数组，但所有成员的【值唯一】</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">【去掉重复的值】</span><br><span class="line"> let a = new Set();</span><br><span class="line"> [1,2,3,4,1,5,7,7].forEach(v=&gt;a.add(v));</span><br><span class="line"> for (const k of a) &#123;</span><br><span class="line">     console.log(k); </span><br><span class="line"> &#125;</span><br><span class="line"> 【例子1：】</span><br><span class="line">  数组去重：</span><br><span class="line">  [...new Set([1,2,3,4,1,7])]</span><br><span class="line">  Array.from(new Set([1,2,3,4,1,5,6]))</span><br><span class="line"></span><br><span class="line">  注意：向Set中添加值的时候，不会类型转换，即6和&apos;6&apos;是不同的</span><br><span class="line"> console.log([...new Set([6, &apos;6&apos;])]);//[6, &quot;6&quot;]</span><br><span class="line">    </span><br><span class="line">   【 filter 过滤】</span><br><span class="line"> let a = new Set([1, 2, 3, 4]);</span><br><span class="line"> let c = new Set([...a].filter(x =&gt; (x % 2) == 0)); </span><br><span class="line"> console.log(c);//Set(2) &#123;2, 4&#125;</span><br><span class="line"></span><br><span class="line"> let a = new Set();【has()表示该值是否为Set的成员】</span><br><span class="line"> a.add(1).add(2); // a =&gt; Set(2) &#123;1, 2&#125;</span><br><span class="line"> a.has(2);        // true</span><br><span class="line"> a.has(3);        // false</span><br><span class="line"></span><br><span class="line"> 【可以使用for...of直接遍历Set。】</span><br><span class="line"> let a = new Set([&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]);</span><br><span class="line"> for(let k of a)&#123;console.log(k)&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><font size="4" color="Gray"><strong>19、map() 方法创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var array1 = [1, 4, 9, 16];</span><br><span class="line">   const map1 = array1.map(x =&gt; &#123;</span><br><span class="line">       if (x == 4) &#123;</span><br><span class="line">           return x * 2;</span><br><span class="line">       &#125;</span><br><span class="line">       return x;</span><br><span class="line">   &#125;);</span><br><span class="line">console.log(map1);//(4) [1, 8, 9, 16]</span><br></pre></td></tr></table></figure></p>
+<p><font size="4" color="Gray"><strong>20、Map类型，值—值，使得各种类型的值(包括对象)都可以作为键</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">let a =new Map();</span><br><span class="line">let bb = &#123;name:&apos;pyy&apos;&#125;</span><br><span class="line">a.set(bb,&quot;my lix&quot;);</span><br><span class="line">console.log(a.get(bb));</span><br><span class="line">console.log(a.has(&quot;cc&quot;));//false</span><br><span class="line"></span><br><span class="line">【  let a = new Map();</span><br><span class="line">        a.set(0, &quot;zero&quot;);</span><br><span class="line">        a.set(1, &quot;one&quot;)</span><br><span class="line">      for (let i of a.values()) &#123; console.log(i); &#125;;</span><br><span class="line">        // zero</span><br><span class="line">        for (let i of a.entries()) &#123; console.log(i); &#125;;</span><br><span class="line">        // [0, &quot;zero&quot;]</span><br><span class="line">        a.forEach((v, k, m) =&gt; &#123;</span><br><span class="line">            console.log(`key:$&#123;k&#125;,value:$&#123;v&#125;,map:$&#123;m&#125;`)</span><br><span class="line">           // key: 0, value: zero, map: [object Map]</span><br><span class="line">        &#125;) </span><br><span class="line">】</span><br></pre></td></tr></table></figure></p>
+<p><font size="4" color="Gray"><strong>场景1：当我们在request传参的时候，想在header基础上带上其他参数：</strong></font><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function request(params)&#123;</span><br><span class="line">   let header1 = &#123;...params.header&#125;;</span><br><span class="line">   header1[&apos;Author&apos;] = &apos;author8888&apos;;</span><br><span class="line">         console.log(header1);</span><br><span class="line"> //&#123;style: &quot;css&quot;, Author: &quot;author8888&quot;&#125;</span><br><span class="line">&#125;</span><br><span class="line">request(&#123;url:&quot;/my/title&quot;,header:&#123;style:&quot;css&quot;&#125;&#125;)</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/asyn2.jpg" alt="image2"></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById(&quot;QR&quot;); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="彭摆鱼 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="彭摆鱼 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/es6/" rel="tag"><i class="fa fa-diamond"></i> es6</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/01/xuecheng3/" rel="next" title="用户认证与授权">
+                <i class="fa fa-chevron-left"></i> 用户认证与授权
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/11/08/react01/" rel="prev" title="react系列01---初见react">
+                react系列01---初见react <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg" alt="彭摆鱼">
+            
+              <p class="site-author-name" itemprop="name">彭摆鱼</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/asteryxxx" title="GitHub &rarr; https://github.com/asteryxxx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="/437767931@qq.com" title="E-Mail &rarr; 437767931@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/yourname" title="Weibo &rarr; https://weibo.com/yourname"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://pyy.com" title="http://pyy.com" rel="noopener" target="_blank">pengyuyan</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总结一下es6常用的语法"><span class="nav-number">1.</span> <span class="nav-text">总结一下es6常用的语法</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彭摆鱼</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/three/three.min.js"></script>
+
+  
+  <script src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=7.0.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+  
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas> 
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+   <script type="text/javascript" src="/js/src/love.js"></script>
+
+
+
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
+
