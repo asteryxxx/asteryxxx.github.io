@@ -1390,6 +1390,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/15/mysql3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="彭摆鱼">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Asteryxx">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/15/mysql3/" class="post-title-link" itemprop="url">数据库题（3）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-15 15:08:28" itemprop="dateCreated datePublished" datetime="2019-04-15T15:08:28+08:00">2019-04-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-16 01:11:54" itemprop="dateModified" datetime="2019-06-16T01:11:54+08:00">2019-06-16</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><strong>1.查询一服（serverId=1）最近3天中，新增的付费玩家统计，按玩家分组，结果格式</strong><br>玩家id  充值总次数  充值总金额  充值总元宝<br>结果：<br><img src="/images/mysql1.jpg" alt="image2"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">	COUNT( playerId ) &apos;充值总次数&apos;,</span><br><span class="line">	serverId &apos;服Id&apos;,</span><br><span class="line">	SUM( moneyNum ) &apos;充值总金额&apos;,</span><br><span class="line">	SUM( goldNum ) &apos;总元宝&apos; </span><br><span class="line">FROM</span><br><span class="line">	PayLog </span><br><span class="line">WHERE</span><br><span class="line">	DATE_SUB( now( ), INTERVAL 3 DAY ) &lt;=  FROM_UNIXTIME( payDate )   #比较的是时间时分秒</span><br><span class="line">          //TO_DAYS(now())- TO_DAYS(FROM_UNIXTIME(payDate))&lt;=3  这种方法比较天数</span><br><span class="line">	  //DATE_SUB( CURDATE( ), INTERVAL 3 DAY ) &lt;= date( FROM_UNIXTIME( payDate ) ) 这种得到年月日比较</span><br><span class="line">	AND serverId = 1   #一服 </span><br><span class="line">GROUP BY</span><br><span class="line">	playerId   #按玩家分组</span><br></pre></td></tr></table></figure>
+<p>解释一下（上面方法采取的是取三天前的时间数据，和三天内的数据时间比较，如果小于就说明是三天内，因为我们在这里存的是时间戳所以要转为时间数据再比较）<br>select DATE_SUB( CURDATE( ), INTERVAL 3 DAY) 得到年月日：<br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/15/mysql3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/15/mysql2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1863,187 +2044,6 @@
           
             <div class="post-button text-center">
               <a class="btn" href="/2019/04/15/sjms/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://weibo.com/2414189922/profile?topnav=1&wvr=6/2019/04/15/mysql3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="彭摆鱼">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="http://img2.touxiang.cn/file/20190112/a7383e05dfbb87c3d10a652c92c6d329.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Asteryxx">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/15/mysql3/" class="post-title-link" itemprop="url">数据库题（3）</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-15 15:08:28" itemprop="dateCreated datePublished" datetime="2019-04-15T15:08:28+08:00">2019-04-15</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-06-16 01:11:54" itemprop="dateModified" datetime="2019-06-16T01:11:54+08:00">2019-06-16</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据库/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><strong>1.查询一服（serverId=1）最近3天中，新增的付费玩家统计，按玩家分组，结果格式</strong><br>玩家id  充值总次数  充值总金额  充值总元宝<br>结果：<br><img src="/images/mysql1.jpg" alt="image2"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">	COUNT( playerId ) &apos;充值总次数&apos;,</span><br><span class="line">	serverId &apos;服Id&apos;,</span><br><span class="line">	SUM( moneyNum ) &apos;充值总金额&apos;,</span><br><span class="line">	SUM( goldNum ) &apos;总元宝&apos; </span><br><span class="line">FROM</span><br><span class="line">	PayLog </span><br><span class="line">WHERE</span><br><span class="line">	DATE_SUB( now( ), INTERVAL 3 DAY ) &lt;=  FROM_UNIXTIME( payDate )   #比较的是时间时分秒</span><br><span class="line">          //TO_DAYS(now())- TO_DAYS(FROM_UNIXTIME(payDate))&lt;=3  这种方法比较天数</span><br><span class="line">	  //DATE_SUB( CURDATE( ), INTERVAL 3 DAY ) &lt;= date( FROM_UNIXTIME( payDate ) ) 这种得到年月日比较</span><br><span class="line">	AND serverId = 1   #一服 </span><br><span class="line">GROUP BY</span><br><span class="line">	playerId   #按玩家分组</span><br></pre></td></tr></table></figure>
-<p>解释一下（上面方法采取的是取三天前的时间数据，和三天内的数据时间比较，如果小于就说明是三天内，因为我们在这里存的是时间戳所以要转为时间数据再比较）<br>select DATE_SUB( CURDATE( ), INTERVAL 3 DAY) 得到年月日：<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/15/mysql3/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
